@@ -14,11 +14,11 @@
 
 ---
 
-## 📖 Overview
+##  Overview
 
 This repository provides an **in-depth exploration** of memory allocator implementations across different domains. From understanding how `malloc` works internally to implementing custom allocators for embedded systems, this guide covers theory, practice, and real-world applications.
 
-### 🎯 What You'll Learn
+###  What You'll Learn
 
 - ✅ **Internal workings** of malloc/free
 - ✅ **Custom allocator implementation** (pool, stack, buddy, slab)
@@ -30,7 +30,7 @@ This repository provides an **in-depth exploration** of memory allocator impleme
 
 ---
 
-## 🏗️ Conceptual Architecture
+##  Conceptual Architecture
 
 ### Memory Allocator Ecosystem
 
@@ -78,7 +78,7 @@ graph TB
 
 ---
 
-## 🔄 Memory Allocation Flow
+##  Memory Allocation Flow
 
 ### Complete malloc() Workflow
 
@@ -161,7 +161,7 @@ Trim arena if possible
 
 ---
 
-## 📊 Memory Layout Concept
+##  Memory Layout Concept
 
 ### Process Virtual Memory Map
 
@@ -205,74 +205,74 @@ struct malloc_chunk {
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```bash
 memory-allocator-deep-dive/
 │
-├── 📁 Memory_Fundamentals/
+├──  Memory_Fundamentals/
 │   ├── memory_layout.md
 │   ├── virtual_memory.md
 │   └── alignment.md
 │
-├── 📁 How_malloc_Works_Internally/
+├──  How_malloc_Works_Internally/
 │   ├── malloc_algorithm.md
 │   ├── bins_and_arenas.md
 │   └── glibc_implementation.md
 │
-├── 📁 Fragmentation/
+├──  Fragmentation/
 │   ├── internal_fragmentation.md
 │   ├── external_fragmentation.md
 │   └── prevention_strategies.md
 │
-├── 📁 Custom_Memory_Allocator/
+├──  Custom_Memory_Allocator/
 │   ├── pool_allocator.c
 │   ├── stack_allocator.c
 │   ├── buddy_allocator.c
 │   ├── slab_allocator.c
 │   └── README.md
 │
-├── 📁 Linux_Memory_Management/
+├──  Linux_Memory_Management/
 │   ├── page_allocation.md
 │   ├── kmalloc_vs_vmalloc.md
 │   └── memory_mapping.md
 │
-├── 📁 Linux_Allocators/
+├──  Linux_Allocators/
 │   ├── buddy_system.md
 │   ├── slab_allocator.md
 │   └── CMA.md
 │
-├── 📁 Kernel_Memory_Allocation/
+├──  Kernel_Memory_Allocation/
 │   ├── kernel_apis.md
 │   └── DMA_memory.md
 │
-├── 📁 Embedded_Memory_Management/
+├──  Embedded_Memory_Management/
 │   ├── mcu_memory.md
 │   ├── static_allocation.md
 │   └── linker_scripts.md
 │
-├── 📁 Cpp_Memory_Management/
+├──  Cpp_Memory_Management/
 │   ├── new_delete.md
 │   ├── placement_new.md
 │   └── custom_allocators_cpp.md
 │
-├── 📁 Smart_Pointers/
+├──  Smart_Pointers/
 │   ├── unique_ptr.md
 │   ├── shared_ptr.md
 │   ├── weak_ptr.md
 │   └── custom_deleters.md
 │
-├── 📁 Android_Memory_Management/
+├──  Android_Memory_Management/
 │   ├── ART_memory.md
 │   ├── native_allocators.md
 │   └── memory_profiling.md
 │
-├── 📁 Memory_Alignment/
+├──  Memory_Alignment/
 │   ├── data_alignment.md
 │   ├── struct_padding.md
 │   └── aligned_alloc.md
 │
-├── 📁 dynamic_memory/
+├──  dynamic_memory/
 │   ├── examples/
 │   └── exercises/
 │
@@ -282,7 +282,7 @@ memory-allocator-deep-dive/
 
 ---
 
-## 🔬 Custom Allocators Deep Dive
+##  Custom Allocators Deep Dive
 
 ### 1. Pool Allocator
 
@@ -420,7 +420,7 @@ void kmem_cache_free(struct kmem_cache* cachep, void* objp);
 
 ---
 
-## 📈 Fragmentation Deep Dive
+##  Fragmentation Deep Dive
 
 ### Internal Fragmentation
 
@@ -459,7 +459,7 @@ Memory after some allocations and frees:
 
 ---
 
-## 🛠️ Build & Run Examples
+##  Build & Run Examples
 
 ### Prerequisites
 
@@ -554,7 +554,7 @@ Pool destroyed, 12000 bytes released
 
 ---
 
-## 🧪 Testing & Validation
+##  Testing & Validation
 
 ### Memory Leak Detection with Valgrind
 
@@ -576,7 +576,7 @@ Pool destroyed.
 
 ---
 
-## 📚 Learning Path
+##  Learning Path
 
 ### Beginner → Intermediate → Advanced
 
@@ -608,7 +608,7 @@ Month 7-8: Platform Specific
 
 ---
 
-## 🎯 Real-World Applications
+##  Real-World Applications
 
 | Domain | Allocation Pattern | Recommended Allocator |
 |--------|-------------------|----------------------|
@@ -621,7 +621,7 @@ Month 7-8: Platform Specific
 
 ---
 
-## 📊 Performance Benchmarks
+##  Performance Benchmarks
 
 | Allocator | Allocation Time | Deallocation Time | Fragmentation | Memory Overhead |
 |-----------|----------------|-------------------|---------------|-----------------|
@@ -633,7 +633,7 @@ Month 7-8: Platform Specific
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Areas for contribution:
 
@@ -654,7 +654,7 @@ git push origin feature/amazing-allocator
 
 ---
 
-## 📖 References & Further Reading
+##  References & Further Reading
 
 ### Books
 - **"The Linux Programming Interface"** - Michael Kerrisk
@@ -675,22 +675,20 @@ git push origin feature/amazing-allocator
 
 ---
 
-## 📄 License
+##  License
 
 MIT License - Free for educational and commercial use.
 
 ---
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
-- Doug Lea (dlmalloc) for foundational work
-- Jeff Bonwick (Slab allocator inventor)
 - Linux kernel memory management community
 - C++ Standards Committee for allocator model
 
 ---
 
-## 📞 Contact & Support
+##  Contact & Support
 
 - **Issues**: [GitHub Issues](https://github.com/jsramesh1990/memory-allocator-deep-dive/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/jsramesh1990/memory-allocator-deep-dive/discussions)
@@ -716,16 +714,3 @@ make run-pool
 **Master memory management, one byte at a time!** 🧠
 ```
 
-This README includes:
-- **Professional badges** for all relevant technologies
-- **Mermaid architecture diagrams** showing the complete ecosystem
-- **Detailed workflows** for malloc and free
-- **Memory layout visualizations** with ASCII art
-- **Custom allocator implementations** with code examples
-- **Fragmentation diagrams** explaining internal/external fragmentation
-- **Performance benchmarks** for different allocators
-- **Learning path** for progressive mastery
-- **Real-world use cases** with allocator recommendations
-- **Build instructions** for running examples
-
-The structure matches your repository's comprehensive content while presenting it in an organized, professional format suitable for recruiters and learners alike.
