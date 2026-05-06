@@ -1,18 +1,5 @@
 # Buffers in C
 
-## Table of Contents
-1. [Definition](#definition)
-2. [Types of Buffers](#types-of-buffers)
-3. [Why Create a Buffer?](#why-create-a-buffer)
-4. [How It Works (Conceptual Flow)](#how-it-works-conceptual-flow)
-5. [How to Create a Buffer](#how-to-create-a-buffer)
-6. [How to Maintain a Buffer](#how-to-maintain-a-buffer)
-7. [Common Uses](#common-uses)
-8. [Advantages & Disadvantages](#advantages--disadvantages)
-9. [Diagram: Data Flow](#diagram-data-flow)
-
----
-
 ## Definition
 
 A **buffer** is a temporary storage area (typically an array in C) used to hold data while it is being transferred from one place to another. It acts as an intermediary between a producer and a consumer of data, smoothing out differences in speed or timing.
