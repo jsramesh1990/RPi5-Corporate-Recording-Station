@@ -906,3 +906,262 @@ int main() {
     return 0;
 }
 ```
+
+Perfect! You have the content - now here's **how to make it display in a readable format** on GitHub:
+
+## 🎯 Quick Fix - 3 Methods:
+
+### Method 1: **Rename the file** (Easiest)
+Change your filename from `Ring Buffer` to:
+```
+ring-buffer.md
+```
+or
+```
+Ring-Buffer.md
+```
+
+GitHub only auto-renders files with these extensions:
+- `.md`
+- `.markdown`
+- `.mdown`
+- `.mkdn`
+
+### Method 2: **Create a README.md**
+Copy your content into a new file called `README.md` in the same folder.
+
+### Method 3: **View it correctly on GitHub**
+If the file already has `.md` extension but looks raw:
+
+1. **Go to your repo main page**
+2. **Navigate to the file** 
+3. **Click the file name** (NOT the "Raw" button)
+4. **It will render beautifully**
+
+---
+
+## 📝 Here's Your Content in a GitHub-Friendly Format
+
+Copy this exactly into a file named `ring-buffer.md`:
+
+```markdown
+# Ring Buffer (Circular Buffer) - Complete Guide
+
+## 📚 What is a Ring Buffer?
+
+A **Ring Buffer** (also called Circular Buffer) is a fixed-size memory area that connects end-to-end, like a circle. When you reach the end, you automatically go back to the beginning.
+
+### Real-World Analogy
+Imagine a **circular parking lot** with 10 spaces:
+- Cars enter and park in empty spaces
+- When the lot is full, new cars either wait or replace the oldest car
+- The first car to enter is the first to leave (FIFO)
+
+```
+Traditional Array (Linear):     Ring Buffer (Circular):
+[0][1][2][3][4][5]              
+                                ┌─[0]─┐
+[0][1][2][3][4][5][6][7]       [7]   [1]
+                                │     │
+Linear: End stops here          [6]   [2]
+                                │     │
+                                └─[5]─[3]┘
+                                   [4]
+                            Wraps around!
+```
+
+## 🎯 Why Use a Ring Buffer?
+
+| Problem | Traditional Solution | Ring Buffer Solution |
+|---------|---------------------|---------------------|
+| Memory shifting | Move all elements (slow) | Just move pointer (fast) |
+| Fixed memory | Dynamic allocation (risk) | Static allocation (safe) |
+| Real-time data | Blocking operations | Lock-free possible |
+
+### Common Applications
+- **UART Communication** → Buffer incoming/outgoing bytes
+- **ADC Sampling** → Store continuous sensor data
+- **Audio Processing** → Circular audio samples
+- **Logging Systems** → Store recent log messages
+
+## 🔧 Basic Structure
+
+```c
+typedef struct {
+    uint8_t *buffer;     // Pointer to storage array
+    int head;           // Write position
+    int tail;           // Read position
+    int size;           // Total capacity
+    int count;          // Current number of items
+} ring_buffer_t;
+```
+
+## ⚙️ Core Operations
+
+### Write Operation
+```c
+bool write_to_buffer(ring_buffer_t *rb, uint8_t data) {
+    if (rb->count >= rb->size) return false;
+    
+    rb->buffer[rb->head] = data;
+    rb->head = (rb->head + 1) % rb->size;
+    rb->count++;
+    return true;
+}
+```
+
+### Read Operation
+```c
+bool read_from_buffer(ring_buffer_t *rb, uint8_t *data) {
+    if (rb->count == 0) return false;
+    
+    *data = rb->buffer[rb->tail];
+    rb->tail = (rb->tail + 1) % rb->size;
+    rb->count--;
+    return true;
+}
+```
+
+## 📊 Visual Working Example
+
+```
+Size = 8 buffer
+Initial:     [ _  _  _  _  _  _  _  _ ]  H=0,T=0,Count=0
+Write 3:     [ A  B  C  _  _  _  _  _ ]  H=3,T=0,Count=3
+Read 2:      [ A  B  C  _  _  _  _  _ ]  H=3,T=2,Count=1
+Write 2:     [ A  B  C  D  E  _  _  _ ]  H=5,T=2,Count=3
+Write 6:     [ F  G  H  D  E  I  J  K ]  H=2,T=3,Count=8 (FULL)
+Read all:    Output: D, E, F, G, H, I, J, K
+```
+
+## 💻 Complete Example
+
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+#define BUFFER_SIZE 5
+
+typedef struct {
+    int buffer[BUFFER_SIZE];
+    int head, tail, count;
+} ring_buffer_t;
+
+void init(ring_buffer_t *rb) {
+    rb->head = rb->tail = rb->count = 0;
+}
+
+bool write(ring_buffer_t *rb, int value) {
+    if (rb->count >= BUFFER_SIZE) return false;
+    
+    rb->buffer[rb->head] = value;
+    rb->head = (rb->head + 1) % BUFFER_SIZE;
+    rb->count++;
+    return true;
+}
+
+bool read(ring_buffer_t *rb, int *value) {
+    if (rb->count == 0) return false;
+    
+    *value = rb->buffer[rb->tail];
+    rb->tail = (rb->tail + 1) % BUFFER_SIZE;
+    rb->count--;
+    return true;
+}
+
+int main() {
+    ring_buffer_t rb;
+    init(&rb);
+    int value;
+    
+    write(&rb, 10);
+    write(&rb, 20);
+    write(&rb, 30);
+    
+    read(&rb, &value);
+    printf("Read: %d\n", value);  // Output: 10
+    
+    write(&rb, 40);
+    write(&rb, 50);
+    
+    while (read(&rb, &value)) {
+        printf("Read: %d\n", value);  // Output: 20,30,40,50
+    }
+    
+    return 0;
+}
+```
+
+## ⚠️ Common Pitfalls
+
+1. **Full vs Empty Ambiguity** → Use `count` variable to track items
+2. **Concurrency Issues** → Use `volatile` and disable interrupts in ISRs
+3. **Buffer Overflow** → Always check before writing
+
+## 📈 Performance Tips
+
+- Use power of 2 sizes for bitwise operations: `size & (size-1)`
+- Make head/tail `volatile` if used in interrupts
+- Use DMA with ring buffers for high performance
+
+## ✅ Summary
+
+| Feature | Benefit |
+|---------|---------|
+| Fixed memory | No dynamic allocation |
+| O(1) operations | Fast and predictable |
+| Lock-free possible | Real-time capable |
+| FIFO behavior | Perfect for data streams |
+
+---
+
+**Perfect for Embedded Systems!** 🚀
+```
+
+---
+
+## 🚀 Steps to Get Readable Format on GitHub:
+
+### Step 1: Create the file correctly
+```bash
+# In your repository folder:
+touch ring-buffer.md
+# Copy-paste the above content into it
+```
+
+### Step 2: Commit and push
+```bash
+git add ring-buffer.md
+git commit -m "Add ring buffer documentation"
+git push
+```
+
+### Step 3: View on GitHub
+Go to: `https://github.com/jsramesh1990/memory-allocator-deep-dive/blob/main/ring-buffer.md`
+
+**It will now look like this:**
+
+---
+
+# Ring Buffer (Circular Buffer) - Complete Guide
+
+## 📚 What is a Ring Buffer?
+
+A **Ring Buffer** (also called Circular Buffer) is a fixed-size memory area that connects end-to-end...
+
+### Real-World Analogy
+Imagine a **circular parking lot** with 10 spaces...
+
+*(All properly formatted with headings, tables, code blocks, and syntax highlighting!)*
+
+---
+
+## ✅ Final Checklist:
+
+- [ ] File extension is `.md` (not just "Ring Buffer")
+- [ ] Not viewing the "Raw" version on GitHub
+- [ ] Content has proper markdown syntax (headings `#`, code blocks ` ``` `)
+- [ ] Viewed on `github.com` not `raw.githubusercontent.com`
+
+**That's it! Your ring buffer documentation will now be perfectly readable on GitHub!** 🎉
+
