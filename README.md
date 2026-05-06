@@ -1,4 +1,4 @@
-# Memory Allocator Deep Dive 🧠
+# Memory Allocator Deep Dive 
 
 > A comprehensive guide to **memory allocator internals** across multiple domains - from embedded systems to kernel memory management. Master how `malloc`, `free`, and custom allocators work under the hood.
 
@@ -8,7 +8,7 @@
 ![Embedded](https://img.shields.io/badge/embedded-ARM%20%7C%20AVR-red)
 ![Android](https://img.shields.io/badge/Android-Memory%20Management-green)
 ![License](https://img.shields.io/badge/license-MIT-brightgreen)
-![Stars](https://img.shields.io/badge/stars-⭐_1-blue)
+![Stars](https://img.shields.io/badge/stars-_1-blue)
 ![Forks](https://img.shields.io/badge/forks-0-gray)
 ![Contributions](https://img.shields.io/badge/contributions-welcome-orange)
 
