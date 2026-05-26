@@ -1,4 +1,4 @@
-# Linux Allocators - Complete Guide
+# Linux Allocators
 
 ## Overview
 
