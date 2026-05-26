@@ -1,4 +1,4 @@
-# C++ Memory Management - Complete Guide
+# C++ Memory Management
 
 ## Overview
 
