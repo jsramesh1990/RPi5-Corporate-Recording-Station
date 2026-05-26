@@ -1,4 +1,4 @@
-# Buffers in C
+# Buffers
 
 ## Definition
 
