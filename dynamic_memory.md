@@ -1,4 +1,4 @@
-# Dynamic Memory APIs in C - Complete Guide
+# Dynamic Memory
 
 ## Overview
 
