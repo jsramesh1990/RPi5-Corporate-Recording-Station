@@ -1,4 +1,4 @@
-# Linux Memory Management - Complete Guide
+# Linux Memory Management
 
 ## Overview
 
