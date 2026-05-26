@@ -1,4 +1,4 @@
-# How malloc Works Internally - Complete Guide
+# How malloc Works Internally 
 
 ## Overview
 
