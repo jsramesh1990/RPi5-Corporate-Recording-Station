@@ -1,4 +1,4 @@
-# Memory Fundamentals - Complete Guide
+# Memory Fundamentals
 
 ## Process Memory Layout
 
