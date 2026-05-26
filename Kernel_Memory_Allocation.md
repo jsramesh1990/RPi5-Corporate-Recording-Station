@@ -1,4 +1,4 @@
-# Kernel Memory Allocation - Complete Guide
+# Kernel Memory Allocation
 
 ## Overview
 
