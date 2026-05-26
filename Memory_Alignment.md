@@ -1,4 +1,4 @@
-# Memory Alignment - Complete Guide
+# Memory Alignment
 
 ## Overview
 
