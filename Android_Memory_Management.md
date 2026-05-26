@@ -1,4 +1,4 @@
-# Android Memory Management - Complete Guide
+# Android Memory Management
 
 ## Overview
 
