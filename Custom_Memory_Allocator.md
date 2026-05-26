@@ -1,4 +1,4 @@
-# Custom Memory Allocator - Complete Implementation Guide
+# Custom Memory Allocator 
 
 ## Overview
 
