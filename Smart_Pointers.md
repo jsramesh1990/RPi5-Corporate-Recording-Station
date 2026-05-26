@@ -1,4 +1,4 @@
-# Smart Pointers - Complete Guide
+# Smart Pointers
 
 ## Overview
 
