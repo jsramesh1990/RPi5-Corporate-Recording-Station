@@ -1,4 +1,4 @@
-# Embedded Memory Management - Complete Guide
+# Embedded Memory Management
 
 ## Overview
 
