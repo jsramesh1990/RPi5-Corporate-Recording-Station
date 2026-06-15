@@ -675,11 +675,6 @@ git push origin feature/amazing-allocator
 
 ---
 
-##  License
-
-MIT License - Free for educational and commercial use.
-
----
 
 ##  Acknowledgments
 
@@ -688,29 +683,5 @@ MIT License - Free for educational and commercial use.
 
 ---
 
-##  Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/jsramesh1990/memory-allocator-deep-dive/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/jsramesh1990/memory-allocator-deep-dive/discussions)
-- **Email**: js.ramesh1990@gmail.com
-
----
-
-## ⭐ Show Your Support
-
-If this guide helps you understand memory allocators:
-
-```bash
-# Star the repository
-git clone https://github.com/jsramesh1990/memory-allocator-deep-dive.git
-cd memory-allocator-deep-dive
-make run-pool
-
-# If it helps, star on GitHub!
-```
-
----
-
-**Master memory management, one byte at a time!** 🧠
-```
 
