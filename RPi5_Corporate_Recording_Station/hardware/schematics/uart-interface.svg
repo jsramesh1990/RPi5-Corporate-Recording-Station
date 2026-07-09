@@ -1,0 +1,100 @@
+```svg
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" width="700" height="500">
+  <rect width="700" height="500" fill="#1a1a2e" rx="10"/>
+  
+  <text x="350" y="40" font-family="Arial" font-size="24" fill="#00ff88" text-anchor="middle">UART Console Interface</text>
+  <text x="350" y="65" font-family="Arial" font-size="14" fill="#8888aa" text-anchor="middle">RPi5 Corporate Recording Station</text>
+  
+  <!-- Raspberry Pi 5 -->
+  <rect x="250" y="120" width="200" height="150" fill="#2d2d44" stroke="#44aaff" stroke-width="2" rx="10"/>
+  <text x="350" y="150" font-family="Arial" font-size="16" fill="#44aaff" text-anchor="middle">Raspberry Pi 5</text>
+  
+  <!-- Dedicated UART Connector -->
+  <rect x="60" y="120" width="120" height="150" fill="#1a1a3e" stroke="#ffaa44" stroke-width="2" rx="10"/>
+  <text x="120" y="145" font-family="Arial" font-size="12" fill="#ffaa44" text-anchor="middle">Dedicated</text>
+  <text x="120" y="160" font-family="Arial" font-size="12" fill="#ffaa44" text-anchor="middle">3-pin UART</text>
+  
+  <rect x="70" y="175" width="100" height="25" fill="#2d2d44" stroke="#44ff88" stroke-width="1" rx="3"/>
+  <text x="120" y="192" font-family="Arial" font-size="11" fill="#44ff88" text-anchor="middle">Pin 1: TX</text>
+  
+  <rect x="70" y="205" width="100" height="25" fill="#2d2d44" stroke="#88ff44" stroke-width="1" rx="3"/>
+  <text x="120" y="222" font-family="Arial" font-size="11" fill="#88ff44" text-anchor="middle">Pin 2: RX</text>
+  
+  <rect x="70" y="235" width="100" height="25" fill="#2d2d44" stroke="#ff4444" stroke-width="1" rx="3"/>
+  <text x="120" y="252" font-family="Arial" font-size="11" fill="#ff4444" text-anchor="middle">Pin 3: GND</text>
+  
+  <!-- GPIO UART -->
+  <rect x="480" y="120" width="160" height="150" fill="#1a1a3e" stroke="#ff88ff" stroke-width="2" rx="10"/>
+  <text x="560" y="145" font-family="Arial" font-size="12" fill="#ff88ff" text-anchor="middle">GPIO UART</text>
+  <text x="560" y="165" font-family="Arial" font-size="11" fill="#ff88ff" text-anchor="middle">(Pins 8, 10, 6)</text>
+  
+  <rect x="490" y="180" width="140" height="25" fill="#2d2d44" stroke="#44ff88" stroke-width="1" rx="3"/>
+  <text x="560" y="197" font-family="Arial" font-size="11" fill="#44ff88" text-anchor="middle">Pin 8: TX (GPIO 14)</text>
+  
+  <rect x="490" y="210" width="140" height="25" fill="#2d2d44" stroke="#88ff44" stroke-width="1" rx="3"/>
+  <text x="560" y="227" font-family="Arial" font-size="11" fill="#88ff44" text-anchor="middle">Pin 10: RX (GPIO 15)</text>
+  
+  <rect x="490" y="240" width="140" height="25" fill="#2d2d44" stroke="#ff4444" stroke-width="1" rx="3"/>
+  <text x="560" y="257" font-family="Arial" font-size="11" fill="#ff4444" text-anchor="middle">Pin 6: GND</text>
+  
+  <!-- Connection Lines -->
+  <line x1="180" y1="180" x2="245" y2="180" stroke="#ffaa44" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="180" y1="210" x2="245" y2="210" stroke="#ffaa44" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="180" y1="240" x2="245" y2="240" stroke="#ffaa44" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <line x1="450" y1="180" x2="485" y2="180" stroke="#ff88ff" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="450" y1="210" x2="485" y2="210" stroke="#ff88ff" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="450" y1="240" x2="485" y2="240" stroke="#ff88ff" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Host PC -->
+  <rect x="250" y="320" width="200" height="80" fill="#2d2d44" stroke="#44ff88" stroke-width="2" rx="10"/>
+  <text x="350" y="350" font-family="Arial" font-size="16" fill="#44ff88" text-anchor="middle">Host PC</text>
+  <text x="350" y="375" font-family="Arial" font-size="11" fill="#88ffaa" text-anchor="middle">USB-to-UART Adapter</text>
+  
+  <!-- USB Connection -->
+  <line x1="350" y1="270" x2="350" y2="315" stroke="#44ff88" stroke-width="2"/>
+  
+  <!-- Configuration -->
+  <rect x="30" y="430" width="640" height="55" fill="#1a1a3e" stroke="#444466" stroke-width="1" rx="5"/>
+  <text x="350" y="450" font-family="Arial" font-size="12" fill="#8888aa" text-anchor="middle">UART Configuration</text>
+  <text x="150" y="472" font-family="Arial" font-size="11" fill="#8888aa" text-anchor="middle">Baud: 115200</text>
+  <text x="300" y="472" font-family="Arial" font-size="11" fill="#8888aa" text-anchor="middle">Data: 8 bits</text>
+  <text x="450" y="472" font-family="Arial" font-size="11" fill="#8888aa" text-anchor="middle">Stop: 1 bit</text>
+  <text x="580" y="472" font-family="Arial" font-size="11" fill="#8888aa" text-anchor="middle">Parity: None</text>
+</svg>
+```
+
+### ASCII Description of UART Interface Schematic
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                          UART Console Interface                                 │
+│                      RPi5 Corporate Recording Station                           │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                  │
+│  ┌──────────────┐    ┌──────────────────────┐    ┌──────────────────────┐      │
+│  │  Dedicated   │    │                     │    │      GPIO UART        │      │
+│  │  3-pin UART  │    │   Raspberry Pi 5    │    │   (Pins 8, 10, 6)     │      │
+│  │              │    │                     │    │                       │      │
+│  │  Pin 1: TX───┼───►│   UART0/PL011      │◄───┤   Pin 8: TX (14)     │      │
+│  │  Pin 2: RX───┼───►│   /dev/ttyAMA10    │◄───┤   Pin 10: RX (15)    │      │
+│  │  Pin 3: GND──┼───►│                     │◄───┤   Pin 6: GND          │      │
+│  └──────────────┘    └──────────────────────┘    └──────────────────────┘      │
+│                               │                                                   │
+│                               │ USB-to-UART                                      │
+│                               ▼                                                   │
+│                      ┌──────────────────────┐                                   │
+│                      │      Host PC         │                                   │
+│                      │  • screen            │                                   │
+│                      │  • minicom           │                                   │
+│                      │  • tio               │                                   │
+│                      └──────────────────────┘                                   │
+│                                                                                  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ UART Configuration: Baud: 115200 | Data: 8 bits | Stop: 1 bit | Parity: None  │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+

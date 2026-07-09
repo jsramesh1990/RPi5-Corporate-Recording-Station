@@ -1,0 +1,111 @@
+Since DXF is a binary vector format, I'll provide an ASCII representation and design specifications.
+
+### ASCII Enclosure Design
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                           3D Enclosure Design                                   │
+│                      RPi5 Corporate Recording Station                           │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                  │
+│   Front View                                Top View                             │
+│   ┌──────────────┐                        ┌────────────────────┐               │
+│   │              │                        │                    │               │
+│   │    Power     │                        │   Cooling Vents    │               │
+│   │    Button    │                        │   (80mm x 40mm)    │               │
+│   │              │                        │                    │               │
+│   │  ┌────────┐  │                        │   ┌────────────┐  │               │
+│   │  │  LED   │  │                        │   │  Fan Grill │  │               │
+│   │  │ Status │  │                        │   └────────────┘  │               │
+│   │  └────────┘  │                        │                    │               │
+│   │              │                        │                    │               │
+│   │  UART Port   │                        │                   │               │
+│   │  (3-pin)     │                        │                   │               │
+│   │              │                        │                   │               │
+│   └──────────────┘                        └────────────────────┘               │
+│                                                                                  │
+│   Dimensions: 120mm x 90mm x 35mm                                               │
+│                                                                                  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│   Side View                              Bottom View                             │
+│   ┌──────────────┐                        ┌────────────────────┐               │
+│   │   Cooling    │                        │                    │               │
+│   │   Vents      │                        │   GPIO Access      │               │
+│   │              │                        │   (40-pin cutout)  │               │
+│   │  USB Ports   │                        │                    │               │
+│   │  (4x)        │                        │   Mounting Holes   │               │
+│   │              │                        │   (4x M2.5)        │               │
+│   │  HDMI Port   │                        │                    │               │
+│   │              │                        │                    │               │
+│   └──────────────┘                        └────────────────────┘               │
+│                                                                                  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Features:                                                                       │
+│ • Passive cooling with optional active fan                                     │
+│ • GPIO access panel for easy connection                                        │
+│ • LED indicators visible from front                                            │
+│ • UART port accessible from front                                              │
+│ • USB and HDMI ports accessible from side                                      │
+│ • Power button on front panel                                                  │
+│ • Mounting holes for wall or table mounting                                    │
+│ • Cable management channels                                                    │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Enclosure Design Specifications
+
+```
+ENCLOSURE SPECIFICATIONS
+=======================
+
+MATERIALS:
+- Main body: PETG or PLA (3D printed)
+- Optional: Aluminum (CNC machined)
+- Color: Black (recommended)
+
+DIMENSIONS:
+- Width: 120mm
+- Depth: 90mm  
+- Height: 35mm
+- Wall thickness: 2.5mm
+
+CUTOUTS:
+- Front: 
+  - Power button (12mm)
+  - LED indicators (3x 3mm)
+  - UART port (10mm x 8mm)
+- Side:
+  - USB ports (4x 15mm x 8mm)
+  - HDMI port (15mm x 5mm)
+  - Ethernet port (15mm x 10mm)
+  - Power input (10mm x 5mm)
+- Top:
+  - Cooling vents (80mm x 40mm)
+  - Fan mounting (40mm x 40mm)
+- Bottom:
+  - GPIO access (60mm x 30mm)
+  - Mounting holes (4x M2.5)
+  - Rubber feet (4x 10mm)
+
+MOUNTING:
+- 4x M2.5 mounting holes
+- 4x rubber feet (10mm diameter)
+- Wall mount option: 2x keyhole slots
+
+COOLING:
+- Passive: Top vents (80mm x 40mm)
+- Active: Optional 40mm fan
+- Airflow: Bottom to top
+
+ACCESS:
+- Removable top panel
+- Tool-less GPIO access
+- Front panel with indicator cutouts
+
+WEIGHT:
+- Approx 200g (with Pi installed)
+- Approx 350g (with full system)
+```
+
+---
+

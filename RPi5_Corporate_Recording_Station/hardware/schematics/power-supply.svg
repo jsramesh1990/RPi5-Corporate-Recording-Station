@@ -1,0 +1,189 @@
+```svg
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" width="700" height="500">
+  <rect width="700" height="500" fill="#1a1a2e" rx="10"/>
+  
+  <text x="350" y="40" font-family="Arial" font-size="24" fill="#00ff88" text-anchor="middle">Power Supply Distribution</text>
+  <text x="350" y="65" font-family="Arial" font-size="14" fill="#8888aa" text-anchor="middle">RPi5 Corporate Recording Station</text>
+  
+  <!-- USB-C Input -->
+  <rect x="30" y="120" width="120" height="80" fill="#2d2d44" stroke="#ff4444" stroke-width="2" rx="10"/>
+  <text x="90" y="150" font-family="Arial" font-size="14" fill="#ff4444" text-anchor="middle">USB-C Input</text>
+  <text x="90" y="170" font-family="Arial" font-size="11" fill="#ff8888" text-anchor="middle">5V @ 5A</text>
+  <text x="90" y="185" font-family="Arial" font-size="11" fill="#ff8888" text-anchor="middle">25W Max</text>
+  
+  <!-- Power Management -->
+  <rect x="200" y="100" width="300" height="120" fill="#2d2d44" stroke="#ffaa44" stroke-width="2" rx="10"/>
+  <text x="350" y="130" font-family="Arial" font-size="16" fill="#ffaa44" text-anchor="middle">Power Management IC</text>
+  <text x="350" y="155" font-family="Arial" font-size="11" fill="#ffcc88" text-anchor="middle">DA9090 PMIC</text>
+  <text x="350" y="175" font-family="Arial" font-size="11" fill="#ffcc88" text-anchor="middle">Battery Management</text>
+  <text x="350" y="195" font-family="Arial" font-size="11" fill="#ffcc88" text-anchor="middle">Over-voltage Protection</text>
+  
+  <!-- Voltage Rails -->
+  <rect x="200" y="250" width="300" height="180" fill="#1a1a3e" stroke="#44aaff" stroke-width="1" rx="10"/>
+  <text x="350" y="275" font-family="Arial" font-size="14" fill="#44aaff" text-anchor="middle">Voltage Rails</text>
+  
+  <rect x="220" y="290" width="120" height="35" fill="#2d2d44" stroke="#44ff88" stroke-width="1" rx="5"/>
+  <text x="280" y="312" font-family="Arial" font-size="11" fill="#44ff88" text-anchor="middle">3.3V @ 3A</text>
+  
+  <rect x="360" y="290" width="120" height="35" fill="#2d2d44" stroke="#88ff44" stroke-width="1" rx="5"/>
+  <text x="420" y="312" font-family="Arial" font-size="11" fill="#88ff44" text-anchor="middle">5V @ 5A</text>
+  
+  <rect x="220" y="335" width="120" height="35" fill="#2d2d44" stroke="#44ffaa" stroke-width="1" rx="5"/>
+  <text x="280" y="357" font-family="Arial" font-size="11" fill="#44ffaa" text-anchor="middle">1.8V @ 2A</text>
+  
+  <rect x="360" y="335" width="120" height="35" fill="#2d2d44" stroke="#aaff44" stroke-width="1" rx="5"/>
+  <text x="420" y="357" font-family="Arial" font-size="11" fill="#aaff44" text-anchor="middle">1.1V @ 1.5A</text>
+  
+  <rect x="280" y="380" width="140" height="35" fill="#2d2d44" stroke="#ffaa44" stroke-width="1" rx="5"/>
+  <text x="350" y="402" font-family="Arial" font-size="11" fill="#ffaa44" text-anchor="middle">PCIe 3.3V @ 0.5A</text>
+  
+  <!-- Power Consumption -->
+  <rect x="30" y="280" width="120" height="150" fill="#1a1a3e" stroke="#ff6644" stroke-width="1" rx="10"/>
+  <text x="90" y="305" font-family="Arial" font-size="12" fill="#ff6644" text-anchor="middle">Power Consumption</text>
+  <text x="50" y="330" font-family="Arial" font-size="10" fill="#ff8888">Idle: 2.5W</text>
+  <text x="50" y="350" font-family="Arial" font-size="10" fill="#ff8888">Active: 12W</text>
+  <text x="50" y="370" font-family="Arial" font-size="10" fill="#ff8888">Peak: 20W</text>
+  <text x="50" y="390" font-family="Arial" font-size="10" fill="#ff8888">+ Peripherals</text>
+  <text x="50" y="410" font-family="Arial" font-size="10" fill="#ff8888">Total: 25W</text>
+  
+  <!-- Protection -->
+  <rect x="560" y="120" width="100" height="200" fill="#1a1a3e" stroke="#ff4444" stroke-width="1" rx="10"/>
+  <text x="610" y="145" font-family="Arial" font-size="12" fill="#ff4444" text-anchor="middle">Protection</text>
+  <text x="575" y="170" font-family="Arial" font-size="10" fill="#ff8888">Over-current</text>
+  <text x="575" y="190" font-family="Arial" font-size="10" fill="#ff8888">Over-voltage</text>
+  <text x="575" y="210" font-family="Arial" font-size="10" fill="#ff8888">Under-voltage</text>
+  <text x="575" y="230" font-family="Arial" font-size="10" fill="#ff8888">Over-temperature</text>
+  <text x="575" y="250" font-family="Arial" font-size="10" fill="#ff8888">Reverse polarity</text>
+  <text x="575" y="270" font-family="Arial" font-size="10" fill="#ff8888">Short circuit</text>
+  <text x="575" y="290" font-family="Arial" font-size="10" fill="#ff8888">ESD protection</text>
+  
+  <!-- Arrows -->
+  <line x1="150" y1="160" x2="195" y2="160" stroke="#ffaa44" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="500" y1="160" x2="555" y2="160" stroke="#ffaa44" stroke-width="2"/>
+  
+  <!-- Legend -->
+  <rect x="30" y="450" width="640" height="35" fill="#1a1a3e" stroke="#444466" stroke-width="1" rx="5"/>
+  <text x="100" y="472" font-family="Arial" font-size="10" fill="#8888aa" text-anchor="middle">█ 5V Rail █ 3.3V Rail █ 1.8V Rail █ 1.1V Rail █ PCIe Rail █ Protection</text>
+</svg>
+```
+
+### ASCII Description of Power Supply Schematic
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                          Power Supply Distribution                              │
+│                      RPi5 Corporate Recording Station                           │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                  │
+│  ┌──────────────┐    ┌────────────────────────────────────┐                     │
+│  │  USB-C Input │    │        Power Management IC         │                     │
+│  │  ┌────────┐  │    │        ┌──────────────────┐       │                     │
+│  │  │ 5V/5A  │──┼───►│        │   DA9090 PMIC    │       │                     │
+│  │  │ 25W    │  │    │        └──────────────────┘       │                     │
+│  └──────────────┘    │        ┌──────────────────┐       │                     │
+│                      │        │ Over-voltage     │       │                     │
+│                      │        │ Protection       │       │                     │
+│                      │        └──────────────────┘       │                     │
+│                      │        ┌──────────────────┐       │                     │
+│                      │        │ Thermal Monitor  │       │                     │
+│                      │        └──────────────────┘       │                     │
+│                      └────────────────────────────────────┘                     │
+│                                          │                                        │
+│                                          ▼                                        │
+│                      ┌────────────────────────────────────┐                     │
+│                      │         Voltage Rails              │                     │
+│                      │  ┌──────────┐  ┌──────────┐       │                     │
+│                      │  │ 3.3V/3A  │  │ 5V/5A    │       │                     │
+│                      │  ├──────────┤  ├──────────┤       │                     │
+│                      │  │ 1.8V/2A  │  │ 1.1V/1.5A│       │                     │
+│                      │  ├──────────┤  ├──────────┤       │                     │
+│                      │  │ PCIe 3.3V│  │          │       │                     │
+│                      │  └──────────┘  └──────────┘       │                     │
+│                      └────────────────────────────────────┘                     │
+│                                                                                  │
+│  ┌──────────────┐    ┌────────────────────────────────────┐                     │
+│  │  Power       │    │        Protection Features         │                     │
+│  │  Consumption │    │  • Over-current   • ESD Protection │                     │
+│  │  Idle: 2.5W  │    │  • Over-voltage   • Thermal Shutoff│                     │
+│  │  Active: 12W │    │  • Under-voltage  • Short Circuit  │                     │
+│  │  Peak: 20W   │    │  • Reverse Polarity                │                     │
+│  │  Total: 25W  │    └────────────────────────────────────┘                     │
+│  └──────────────┘                                                               │
+│                                                                                  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Legend: ████ 5V Rail ████ 3.3V Rail ████ 1.8V Rail ████ 1.1V Rail ████ PCIe  │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+```svg
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" width="700" height="500">
+  <rect width="700" height="500" fill="#1a1a2e" rx="10"/>
+  
+  <text x="350" y="40" font-family="Arial" font-size="24" fill="#00ff88" text-anchor="middle">Power Supply Distribution</text>
+  <text x="350" y="65" font-family="Arial" font-size="14" fill="#8888aa" text-anchor="middle">RPi5 Corporate Recording Station</text>
+  
+  <!-- USB-C Input -->
+  <rect x="30" y="120" width="120" height="80" fill="#2d2d44" stroke="#ff4444" stroke-width="2" rx="10"/>
+  <text x="90" y="150" font-family="Arial" font-size="14" fill="#ff4444" text-anchor="middle">USB-C Input</text>
+  <text x="90" y="170" font-family="Arial" font-size="11" fill="#ff8888" text-anchor="middle">5V @ 5A</text>
+  <text x="90" y="185" font-family="Arial" font-size="11" fill="#ff8888" text-anchor="middle">25W Max</text>
+  
+  <!-- Power Management -->
+  <rect x="200" y="100" width="300" height="120" fill="#2d2d44" stroke="#ffaa44" stroke-width="2" rx="10"/>
+  <text x="350" y="130" font-family="Arial" font-size="16" fill="#ffaa44" text-anchor="middle">Power Management IC</text>
+  <text x="350" y="155" font-family="Arial" font-size="11" fill="#ffcc88" text-anchor="middle">DA9090 PMIC</text>
+  <text x="350" y="175" font-family="Arial" font-size="11" fill="#ffcc88" text-anchor="middle">Battery Management</text>
+  <text x="350" y="195" font-family="Arial" font-size="11" fill="#ffcc88" text-anchor="middle">Over-voltage Protection</text>
+  
+  <!-- Voltage Rails -->
+  <rect x="200" y="250" width="300" height="180" fill="#1a1a3e" stroke="#44aaff" stroke-width="1" rx="10"/>
+  <text x="350" y="275" font-family="Arial" font-size="14" fill="#44aaff" text-anchor="middle">Voltage Rails</text>
+  
+  <rect x="220" y="290" width="120" height="35" fill="#2d2d44" stroke="#44ff88" stroke-width="1" rx="5"/>
+  <text x="280" y="312" font-family="Arial" font-size="11" fill="#44ff88" text-anchor="middle">3.3V @ 3A</text>
+  
+  <rect x="360" y="290" width="120" height="35" fill="#2d2d44" stroke="#88ff44" stroke-width="1" rx="5"/>
+  <text x="420" y="312" font-family="Arial" font-size="11" fill="#88ff44" text-anchor="middle">5V @ 5A</text>
+  
+  <rect x="220" y="335" width="120" height="35" fill="#2d2d44" stroke="#44ffaa" stroke-width="1" rx="5"/>
+  <text x="280" y="357" font-family="Arial" font-size="11" fill="#44ffaa" text-anchor="middle">1.8V @ 2A</text>
+  
+  <rect x="360" y="335" width="120" height="35" fill="#2d2d44" stroke="#aaff44" stroke-width="1" rx="5"/>
+  <text x="420" y="357" font-family="Arial" font-size="11" fill="#aaff44" text-anchor="middle">1.1V @ 1.5A</text>
+  
+  <rect x="280" y="380" width="140" height="35" fill="#2d2d44" stroke="#ffaa44" stroke-width="1" rx="5"/>
+  <text x="350" y="402" font-family="Arial" font-size="11" fill="#ffaa44" text-anchor="middle">PCIe 3.3V @ 0.5A</text>
+  
+  <!-- Power Consumption -->
+  <rect x="30" y="280" width="120" height="150" fill="#1a1a3e" stroke="#ff6644" stroke-width="1" rx="10"/>
+  <text x="90" y="305" font-family="Arial" font-size="12" fill="#ff6644" text-anchor="middle">Power Consumption</text>
+  <text x="50" y="330" font-family="Arial" font-size="10" fill="#ff8888">Idle: 2.5W</text>
+  <text x="50" y="350" font-family="Arial" font-size="10" fill="#ff8888">Active: 12W</text>
+  <text x="50" y="370" font-family="Arial" font-size="10" fill="#ff8888">Peak: 20W</text>
+  <text x="50" y="390" font-family="Arial" font-size="10" fill="#ff8888">+ Peripherals</text>
+  <text x="50" y="410" font-family="Arial" font-size="10" fill="#ff8888">Total: 25W</text>
+  
+  <!-- Protection -->
+  <rect x="560" y="120" width="100" height="200" fill="#1a1a3e" stroke="#ff4444" stroke-width="1" rx="10"/>
+  <text x="610" y="145" font-family="Arial" font-size="12" fill="#ff4444" text-anchor="middle">Protection</text>
+  <text x="575" y="170" font-family="Arial" font-size="10" fill="#ff8888">Over-current</text>
+  <text x="575" y="190" font-family="Arial" font-size="10" fill="#ff8888">Over-voltage</text>
+  <text x="575" y="210" font-family="Arial" font-size="10" fill="#ff8888">Under-voltage</text>
+  <text x="575" y="230" font-family="Arial" font-size="10" fill="#ff8888">Over-temperature</text>
+  <text x="575" y="250" font-family="Arial" font-size="10" fill="#ff8888">Reverse polarity</text>
+  <text x="575" y="270" font-family="Arial" font-size="10" fill="#ff8888">Short circuit</text>
+  <text x="575" y="290" font-family="Arial" font-size="10" fill="#ff8888">ESD protection</text>
+  
+  <!-- Arrows -->
+  <line x1="150" y1="160" x2="195" y2="160" stroke="#ffaa44" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="500" y1="160" x2="555" y2="160" stroke="#ffaa44" stroke-width="2"/>
+  
+  <!-- Legend -->
+  <rect x="30" y="450" width="640" height="35" fill="#1a1a3e" stroke="#444466" stroke-width="1" rx="5"/>
+  <text x="100" y="472" font-family="Arial" font-size="10" fill="#8888aa" text-anchor="middle">█ 5V Rail █ 3.3V Rail █ 1.8V Rail █ 1.1V Rail █ PCIe Rail █ Protection</text>
+</svg>
+```
+

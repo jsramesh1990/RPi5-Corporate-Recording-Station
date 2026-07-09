@@ -1,0 +1,140 @@
+```svg
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect width="800" height="600" fill="#1a1a2e" rx="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial" font-size="24" fill="#00ff88" text-anchor="middle">Raspberry Pi 5 Main Board Schematic</text>
+  <text x="400" y="65" font-family="Arial" font-size="14" fill="#8888aa" text-anchor="middle">Corporate Recording Station - System Architecture</text>
+  
+  <!-- Raspberry Pi 5 (Center) -->
+  <rect x="250" y="100" width="300" height="200" fill="#2d2d44" stroke="#00ff88" stroke-width="2" rx="10"/>
+  <text x="400" y="130" font-family="Arial" font-size="18" fill="#00ff88" text-anchor="middle">Raspberry Pi 5</text>
+  <text x="400" y="150" font-family="Arial" font-size="12" fill="#8888aa" text-anchor="middle">ARM Cortex-A76 @ 2.4GHz</text>
+  <text x="400" y="170" font-family="Arial" font-size="12" fill="#8888aa" text-anchor="middle">4GB/8GB LPDDR4X SDRAM</text>
+  <text x="400" y="190" font-family="Arial" font-size="12" fill="#8888aa" text-anchor="middle">VideoCore VII GPU</text>
+  
+  <!-- CPU Core Details -->
+  <rect x="270" y="210" width="260" height="70" fill="#1a1a3e" stroke="#4466aa" stroke-width="1" rx="5"/>
+  <text x="400" y="230" font-family="Arial" font-size="11" fill="#88aaff" text-anchor="middle">CPU Cores: 4x Cortex-A76</text>
+  <text x="400" y="248" font-family="Arial" font-size="11" fill="#88aaff" text-anchor="middle">L1 Cache: 64KB I/D per core</text>
+  <text x="400" y="266" font-family="Arial" font-size="11" fill="#88aaff" text-anchor="middle">L2 Cache: 512KB per core</text>
+  
+  <!-- GPIO Header -->
+  <rect x="30" y="250" width="60" height="180" fill="#2d2d44" stroke="#ffaa44" stroke-width="2" rx="5"/>
+  <text x="60" y="270" font-family="Arial" font-size="10" fill="#ffaa44" text-anchor="middle">40-Pin</text>
+  <text x="60" y="285" font-family="Arial" font-size="10" fill="#ffaa44" text-anchor="middle">GPIO</text>
+  <text x="60" y="300" font-family="Arial" font-size="10" fill="#ffaa44" text-anchor="middle">Header</text>
+  <line x1="90" y1="300" x2="250" y2="250" stroke="#ffaa44" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="90" y1="350" x2="250" y2="280" stroke="#ffaa44" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="90" y1="400" x2="250" y2="310" stroke="#ffaa44" stroke-width="1" stroke-dasharray="5,5"/>
+  
+  <!-- USB 3.0 Ports -->
+  <rect x="30" y="100" width="60" height="50" fill="#2d2d44" stroke="#44aaff" stroke-width="2" rx="5"/>
+  <text x="60" y="120" font-family="Arial" font-size="10" fill="#44aaff" text-anchor="middle">USB 3.0</text>
+  <text x="60" y="135" font-family="Arial" font-size="10" fill="#44aaff" text-anchor="middle">Ports</text>
+  
+  <!-- Ethernet -->
+  <rect x="30" y="170" width="60" height="50" fill="#2d2d44" stroke="#44ffaa" stroke-width="2" rx="5"/>
+  <text x="60" y="190" font-family="Arial" font-size="10" fill="#44ffaa" text-anchor="middle">Gigabit</text>
+  <text x="60" y="205" font-family="Arial" font-size="10" fill="#44ffaa" text-anchor="middle">Ethernet</text>
+  
+  <!-- HDMI -->
+  <rect x="710" y="100" width="60" height="50" fill="#2d2d44" stroke="#ff6644" stroke-width="2" rx="5"/>
+  <text x="740" y="120" font-family="Arial" font-size="10" fill="#ff6644" text-anchor="middle">HDMI</text>
+  <text x="740" y="135" font-family="Arial" font-size="10" fill="#ff6644" text-anchor="middle">Output</text>
+  
+  <!-- CSI Camera -->
+  <rect x="710" y="170" width="60" height="50" fill="#2d2d44" stroke="#ff88ff" stroke-width="2" rx="5"/>
+  <text x="740" y="190" font-family="Arial" font-size="10" fill="#ff88ff" text-anchor="middle">CSI</text>
+  <text x="740" y="205" font-family="Arial" font-size="10" fill="#ff88ff" text-anchor="middle">Camera</text>
+  
+  <!-- PCIe -->
+  <rect x="710" y="250" width="60" height="50" fill="#2d2d44" stroke="#ffaa44" stroke-width="2" rx="5"/>
+  <text x="740" y="270" font-family="Arial" font-size="10" fill="#ffaa44" text-anchor="middle">PCIe</text>
+  <text x="740" y="285" font-family="Arial" font-size="10" fill="#ffaa44" text-anchor="middle">2.0 x1</text>
+  
+  <!-- Power -->
+  <rect x="710" y="320" width="60" height="50" fill="#2d2d44" stroke="#ff4444" stroke-width="2" rx="5"/>
+  <text x="740" y="340" font-family="Arial" font-size="10" fill="#ff4444" text-anchor="middle">USB-C</text>
+  <text x="740" y="355" font-family="Arial" font-size="10" fill="#ff4444" text-anchor="middle">5V/5A</text>
+  
+  <!-- Memory Connections -->
+  <rect x="250" y="340" width="300" height="80" fill="#1a1a3e" stroke="#44aaff" stroke-width="1" rx="5"/>
+  <text x="400" y="360" font-family="Arial" font-size="12" fill="#44aaff" text-anchor="middle">Memory Architecture</text>
+  <text x="300" y="390" font-family="Arial" font-size="11" fill="#88aaff">MMU: ARMv8-A Virtual Memory</text>
+  <text x="300" y="408" font-family="Arial" font-size="11" fill="#88aaff">Paging: 4KB Pages</text>
+  
+  <!-- System Components -->
+  <rect x="250" y="440" width="300" height="130" fill="#1a1a3e" stroke="#88ff88" stroke-width="1" rx="5"/>
+  <text x="400" y="460" font-family="Arial" font-size="12" fill="#88ff88" text-anchor="middle">System Components</text>
+  <text x="280" y="485" font-family="Arial" font-size="11" fill="#aaffaa">• Storage Monitor</text>
+  <text x="280" y="505" font-family="Arial" font-size="11" fill="#aaffaa">• Memory Manager</text>
+  <text x="280" y="525" font-family="Arial" font-size="11" fill="#aaffaa">• Cloud Uploader</text>
+  <text x="500" y="485" font-family="Arial" font-size="11" fill="#aaffaa">• Video Recorder</text>
+  <text x="500" y="505" font-family="Arial" font-size="11" fill="#aaffaa">• Audio Recorder</text>
+  <text x="500" y="525" font-family="Arial" font-size="11" fill="#aaffaa">• Web Server</text>
+  
+  <!-- Legend -->
+  <rect x="30" y="460" width="180" height="110" fill="#1a1a3e" stroke="#666688" stroke-width="1" rx="5"/>
+  <text x="120" y="480" font-family="Arial" font-size="12" fill="#8888aa" text-anchor="middle">Legend</text>
+  <circle cx="50" cy="500" r="5" fill="#00ff88"/>
+  <text x="65" y="505" font-family="Arial" font-size="10" fill="#8888aa">Pi 5 Core</text>
+  <circle cx="50" cy="520" r="5" fill="#ffaa44"/>
+  <text x="65" y="525" font-family="Arial" font-size="10" fill="#8888aa">GPIO/PCIe</text>
+  <circle cx="50" cy="540" r="5" fill="#44aaff"/>
+  <text x="65" y="545" font-family="Arial" font-size="10" fill="#8888aa">USB/Network</text>
+  <circle cx="50" cy="560" r="5" fill="#ff6644"/>
+  <text x="65" y="565" font-family="Arial" font-size="10" fill="#8888aa">HDMI/Display</text>
+  
+  <!-- Border -->
+  <rect x="10" y="10" width="780" height="580" fill="none" stroke="#444466" stroke-width="2" rx="15"/>
+</svg>
+```
+
+### ASCII Description of Main Board Schematic
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                        RPi5 Corporate Recording Station                          │
+│                        System Main Board Architecture                            │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                    │
+│  ┌──────────────┐                    ┌────────────────────────────────┐           │
+│  │   USB 3.0    │                    │    ARM Cortex-A76 @ 2.4GHz    │           │
+│  │   Ports      │                    │    ┌────────────────────────┐ │           │
+│  └──────┬───────┘                    │    │  4 Cores, 8MB L3 Cache │ │           │
+│         │                            │    └────────────────────────┘ │           │
+│  ┌──────▼───────┐                    │    ┌────────────────────────┐ │           │
+│  │  Gigabit     │                    │    │  4GB/8GB LPDDR4X RAM   │ │           │
+│  │  Ethernet    │                    │    └────────────────────────┘ │           │
+│  └──────┬───────┘                    │    ┌────────────────────────┐ │           │
+│         │                            │    │  VideoCore VII GPU     │ │           │
+│  ┌──────▼───────┐                    │    └────────────────────────┘ │           │
+│  │  40-Pin GPIO │◄───────────────────┤                               │           │
+│  │  Header      │                    │    ┌────────────────────────┐ │           │
+│  └──────────────┘                    │    │  Memory Architecture   │ │           │
+│                                      │    │  • MMU: ARMv8-A        │ │           │
+│  ┌──────────────┐                    │    │  • Paging: 4KB Pages   │ │           │
+│  │  CSI Camera  │◄───────────────────┤    │  • ZRAM: Enabled       │ │           │
+│  └──────────────┘                    │    └────────────────────────┘ │           │
+│                                      │                               │           │
+│  ┌──────────────┐                    │    ┌────────────────────────┐ │           │
+│  │  HDMI Output │                    │    │  System Components     │ │           │
+│  └──────────────┘                    │    │  • Storage Monitor     │ │           │
+│                                      │    │  • Memory Manager      │ │           │
+│  ┌──────────────┐                    │    │  • Cloud Uploader      │ │           │
+│  │  PCIe 2.0 x1 │◄───────────────────┤    │  • Video Recorder      │ │           │
+│  └──────────────┘                    │    │  • Audio Recorder      │ │           │
+│                                      │    │  • Web Server          │ │           │
+│  ┌──────────────┐                    │    └────────────────────────┘ │           │
+│  │  USB-C Power │                    │                               │           │
+│  │  (5V/5A)     │                    └────────────────────────────────┘           │
+│  └──────────────┘                                                               │
+│                                                                                    │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│ Legend:  ████ Pi 5 Core   ████ GPIO/PCIe   ████ USB/Network   ████ HDMI/Display │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
