@@ -1,0 +1,56 @@
+
+---
+
+## 📁 API Documentation Summary
+
+| File | Purpose | Key Features |
+|------|---------|--------------|
+| **swagger.yaml** | OpenAPI 3.0.3 specification | Complete REST API documentation for all endpoints |
+
+### API Endpoints Summary
+
+| Category | Endpoints | Description |
+|----------|-----------|-------------|
+| **System** | `/system/status`, `/system/version`, `/system/reboot`, `/system/shutdown` | System monitoring and control |
+| **Recording** | `/recording/status`, `/recording/start`, `/recording/stop`, `/recording/pause`, `/recording/resume`, `/recording/list`, `/recording/{id}`, `/recording/{id}/download` | Recording control and management |
+| **Storage** | `/storage/status`, `/storage/files`, `/storage/cleanup` | Storage monitoring and management |
+| **Cloud** | `/cloud/status`, `/cloud/connect`, `/cloud/disconnect`, `/cloud/upload`, `/cloud/sync` | Cloud integration |
+| **Network** | `/network/status`, `/network/wifi/scan`, `/network/wifi/connect`, `/network/wifi/disconnect` | Network management |
+| **Hardware** | `/hardware/status`, `/hardware/gpio`, `/hardware/gpio/{pin}` | Hardware control |
+| **Health** | `/health`, `/health/live`, `/health/ready` | Health monitoring |
+| **Metrics** | `/metrics` | Prometheus metrics |
+
+### Authentication
+- **Bearer Token**: All API endpoints (except health checks) require authentication
+- **Security**: JWT-based authentication with configurable token expiry
+
+### Response Formats
+- **Success**: Returns `SuccessResponse` with `data` field
+- **Error**: Returns `ErrorResponse` with error details
+- **Status Codes**: Standard HTTP status codes (200, 400, 401, 404, 409, 500, etc.)
+
+### Usage Example
+
+```bash
+# Get system status
+curl -X GET http://localhost:8080/api/v1/system/status \
+  -H "Authorization: Bearer <token>"
+
+# Start recording
+curl -X POST http://localhost:8080/api/v1/recording/start \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"width": 1920, "height": 1080, "framerate": 30}'
+
+# Stop recording
+curl -X POST http://localhost:8080/api/v1/recording/stop \
+  -H "Authorization: Bearer <token>"
+
+# Upload to cloud
+curl -X POST http://localhost:8080/api/v1/cloud/upload \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"file": "/var/lib/recording-station/recordings/meeting.mp4"}'
+
+# Health check (no auth)
+curl -X GET http://localhost:8080/api/v1/health

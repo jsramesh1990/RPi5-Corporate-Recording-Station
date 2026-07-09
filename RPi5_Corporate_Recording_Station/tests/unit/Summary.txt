@@ -1,0 +1,107 @@
+Unit Test Summary
+File	Purpose	Key Test Cases
+test_memory.cpp	Memory Manager tests	Basic/allocation, aligned allocation, reallocation, memory pools, ZRAM, protection, statistics, profiling, edge cases
+test_storage.cpp	Storage Monitor tests	Directory scanning, file metadata, time credentials, statistics, file filtering, export, real-time monitoring, file operations, thresholds
+test_upload.cpp	Cloud Upload tests	Connection management, file upload, queue management, retry logic, progress tracking, sync manager, error handling, configuration, pause/resume, cancel
+test_hardware_mock.cpp	Hardware mock tests	GPIO, UART, Audio, Camera, PWM, I2C, SPI, hardware integration
+Key Features
+
+    Memory Manager Tests:
+
+        Basic allocation/deallocation
+
+        Aligned allocation with various alignments
+
+        Reallocation with data preservation
+
+        Memory pool creation and management
+
+        ZRAM compression testing
+
+        Memory protection flags
+
+        Statistics and profiling
+
+        Edge cases (zero size, null deallocation, fragmentation)
+
+    Storage Monitor Tests:
+
+        Directory scanning (recursive/non-recursive)
+
+        File metadata extraction
+
+        Time credentials (creation, modification, access)
+
+        Statistics calculation
+
+        File filtering by type, size, pattern
+
+        Export to JSON and CSV
+
+        Real-time monitoring with callbacks
+
+        File operations (delete, move, copy, rename)
+
+        Threshold warnings
+
+    Cloud Upload Tests:
+
+        Connection management
+
+        Single and multiple file upload
+
+        Queue management
+
+        Retry logic
+
+        Progress tracking
+
+        Sync manager integration
+
+        Error handling
+
+        Configuration settings
+
+        Pause/resume functionality
+
+        Cancel upload
+
+    Hardware Mock Tests:
+
+        GPIO configuration and control
+
+        UART communication
+
+        Audio interface
+
+        Camera interface
+
+        PWM controller
+
+        I2C controller
+
+        SPI interface
+
+        Hardware integration
+
+Running Tests
+bash
+
+# Build and run all unit tests
+cd build
+make test-unit
+
+# Run specific test suite
+./tests/unit/test_memory
+./tests/unit/test_storage
+./tests/unit/test_upload
+./tests/unit/test_hardware_mock
+
+# Run with verbose output
+./tests/unit/test_memory --gtest_verbose=1
+
+# Run specific test case
+./tests/unit/test_memory --gtest_filter=MemoryManagerTest.BasicAllocation
+
+# Run with repeat
+./tests/unit/test_memory --gtest_repeat=5

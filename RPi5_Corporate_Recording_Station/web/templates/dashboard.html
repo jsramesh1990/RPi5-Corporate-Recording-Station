@@ -1,0 +1,165 @@
+<!-- Dashboard Page Content -->
+<div class="dashboard">
+    <!-- Quick Stats Row -->
+    <div class="metrics-row">
+        <div class="metric-card">
+            <div class="metric-label">CPU Usage</div>
+            <div class="metric-value" id="cpuValue">--%</div>
+            <div class="progress-bar">
+                <div class="progress-fill green" id="cpuBar" style="width:0%"></div>
+            </div>
+            <div class="metric-sub" id="cpuSub">Temperature: --°C</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-label">Memory</div>
+            <div class="metric-value" id="memoryValue">--</div>
+            <div class="progress-bar">
+                <div class="progress-fill blue" id="memoryBar" style="width:0%"></div>
+            </div>
+            <div class="metric-sub" id="memorySub">Swap: --</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-label">Storage</div>
+            <div class="metric-value" id="storageValue">--</div>
+            <div class="progress-bar">
+                <div class="progress-fill green" id="storageBar" style="width:0%"></div>
+            </div>
+            <div class="metric-sub" id="storageSub">Files: --</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-label">Uptime</div>
+            <div class="metric-value" id="uptimeValue">--</div>
+            <div class="metric-sub" id="uptimeSub">System running</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-label">Network</div>
+            <div class="metric-value" id="networkValue">--</div>
+            <div class="metric-sub" id="networkSub">Speed: --</div>
+        </div>
+    </div>
+    
+    <!-- Recording Controls -->
+    <div class="recording-controls">
+        <div class="status-display">
+            <div class="recording-indicator idle" id="recordingIndicator"></div>
+            <div class="recording-info">
+                <div id="recordingStatusText" style="font-weight:600;">Idle</div>
+                <div class="filename" id="recordingFilename" style="color:var(--text-muted);font-size:0.8rem;"></div>
+                <div style="font-size:0.75rem;color:var(--text-muted);" id="recordingDetails"></div>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-success" id="recordBtn" onclick="startRecording()">
+                <span>▶</span> Start Recording
+            </button>
+            <button class="btn btn-warning" id="pauseBtn" onclick="pauseRecording()" style="display:none;">
+                <span>⏸</span> Pause
+            </button>
+            <button class="btn btn-danger" id="stopBtn" onclick="stopRecording()" style="display:none;">
+                <span>⏹</span> Stop
+            </button>
+            <button class="btn btn-outline" onclick="navigateTo('recordings')">
+                📁 View All
+            </button>
+        </div>
+    </div>
+    
+    <!-- Charts Row -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;">
+        <div class="chart-container">
+            <div class="chart-header">
+                <span class="chart-title">📈 CPU Usage</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);">Last 5 min</span>
+            </div>
+            <div class="chart-body">
+                <canvas id="cpuChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <span class="chart-title">📊 Memory Usage</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);">Last 5 min</span>
+            </div>
+            <div class="chart-body">
+                <canvas id="memChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <span class="chart-title">📶 Network Rate</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);">Last 5 min</span>
+            </div>
+            <div class="chart-body">
+                <canvas id="netChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Recordings -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">📋 Recent Recordings</span>
+            <div style="display:flex;gap:0.5rem;">
+                <button class="btn btn-sm btn-outline" onclick="refreshDashboard()">🔄 Refresh</button>
+                <button class="btn btn-sm btn-outline" onclick="exportDashboard()">📤 Export</button>
+            </div>
+        </div>
+        <div id="recentRecordings">
+            <div style="text-align:center;padding:2rem;color:var(--text-muted);">Loading...</div>
+        </div>
+    </div>
+    
+    <!-- System Status -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">⚙️ System Status</span>
+            </div>
+            <div class="system-status-grid" id="systemStatusGrid">
+                <div class="system-status-item">
+                    <span class="status-label">Status</span>
+                    <span class="status-value" id="sysStatusValue">Online</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="status-label">Version</span>
+                    <span class="status-value" id="sysVersionValue">2.0.0</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="status-label">Processes</span>
+                    <span class="status-value" id="sysProcessesValue">--</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="status-label">Load Average</span>
+                    <span class="status-value" id="sysLoadValue">--</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="status-label">Temperature</span>
+                    <span class="status-value" id="sysTempValue">--°C</span>
+                </div>
+                <div class="system-status-item">
+                    <span class="status-label">Disk I/O</span>
+                    <span class="status-value" id="sysDiskValue">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">🔌 GPIO Status</span>
+                <span style="font-size:0.7rem;color:var(--text-muted);">Click to toggle</span>
+            </div>
+            <div id="gpioQuickStatus">
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:0.5rem;">
+                    <!-- GPIO pins loaded dynamically -->
+                    <div style="text-align:center;padding:1rem;color:var(--text-muted);">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

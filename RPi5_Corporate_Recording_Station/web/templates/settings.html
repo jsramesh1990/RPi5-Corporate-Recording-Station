@@ -1,0 +1,360 @@
+<!-- Settings Page Content -->
+<div style="display:flex;flex-direction:column;gap:1.25rem;">
+    <h2>⚙️ Settings</h2>
+    
+    <!-- API Settings -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">🔑 API Authentication</span>
+        </div>
+        <div style="padding:0.5rem 0;">
+            <div class="form-group">
+                <label>API Token</label>
+                <input type="text" class="form-control" id="apiTokenInput" placeholder="Enter your API token">
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.25rem;">
+                    Token is stored locally in your browser
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="saveApiToken()">💾 Save Token</button>
+            <button class="btn btn-outline" onclick="clearApiToken()">🗑 Clear Token</button>
+        </div>
+    </div>
+    
+    <!-- Recording Settings -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">🎥 Recording Settings</span>
+        </div>
+        <div style="padding:0.5rem 0;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+                <div class="form-group">
+                    <label>Video Resolution</label>
+                    <select class="form-control" id="recordingResolution">
+                        <option value="1920x1080">1920x1080 (1080p)</option>
+                        <option value="1280x720">1280x720 (720p)</option>
+                        <option value="3840x2160">3840x2160 (4K)</option>
+                        <option value="640x480">640x480 (480p)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Framerate</label>
+                    <select class="form-control" id="recordingFramerate">
+                        <option value="30">30 fps</option>
+                        <option value="60">60 fps</option>
+                        <option value="24">24 fps</option>
+                        <option value="15">15 fps</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Video Quality</label>
+                    <select class="form-control" id="recordingQuality">
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                        <option value="ultra">Ultra</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Container Format</label>
+                    <select class="form-control" id="recordingContainer">
+                        <option value="mp4">MP4</option>
+                        <option value="mkv">MKV</option>
+                        <option value="avi">AVI</option>
+                        <option value="mov">MOV</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="saveRecordingSettings()">💾 Save Recording Settings</button>
+        </div>
+    </div>
+    
+    <!-- Cloud Settings -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">☁️ Cloud Settings</span>
+        </div>
+        <div style="padding:0.5rem 0;">
+            <div class="form-group">
+                <label>Cloud Provider</label>
+                <select class="form-control" id="cloudProviderSetting">
+                    <option value="nextcloud">Nextcloud</option>
+                    <option value="onedrive">OneDrive</option>
+                    <option value="s3">AWS S3</option>
+                    <option value="webdav">WebDAV</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>URL / Endpoint</label>
+                <input type="text" class="form-control" id="cloudUrlSetting" placeholder="https://cloud.example.com">
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" id="cloudUsernameSetting" placeholder="username">
+            </div>
+            <div class="form-group">
+                <label>Password / API Key</label>
+                <input type="password" class="form-control" id="cloudPasswordSetting" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="cloudAutoSyncSetting" checked>
+                    Auto-sync recordings to cloud
+                </label>
+            </div>
+            <button class="btn btn-primary" onclick="saveCloudSettings()">💾 Save Cloud Settings</button>
+            <button class="btn btn-success" onclick="testCloudConnection()">🔌 Test Connection</button>
+        </div>
+    </div>
+    
+    <!-- System Settings -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">⚙️ System Settings</span>
+        </div>
+        <div style="padding:0.5rem 0;">
+            <div class="form-group">
+                <label>Log Level</label>
+                <select class="form-control" id="logLevelSetting">
+                    <option value="debug">Debug</option>
+                    <option value="info" selected>Info</option>
+                    <option value="warning">Warning</option>
+                    <option value="error">Error</option>
+                    <option value="critical">Critical</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="autoStartRecording">
+                    Auto-start recording on boot
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="enableNotifications" checked>
+                    Enable desktop notifications
+                </label>
+            </div>
+            <button class="btn btn-primary" onclick="saveSystemSettings()">💾 Save System Settings</button>
+        </div>
+    </div>
+    
+    <!-- System Actions -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">🔧 System Actions</span>
+        </div>
+        <div style="padding:0.5rem 0;">
+            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <button class="btn btn-warning" onclick="confirmReboot()">🔄 Reboot System</button>
+                <button class="btn btn-danger" onclick="confirmShutdown()">⏻ Shutdown System</button>
+                <button class="btn btn-outline" onclick="exportAllSettings()">📤 Export Settings</button>
+                <button class="btn btn-outline" onclick="importAllSettings()">📥 Import Settings</button>
+                <button class="btn btn-outline" onclick="resetAllSettings()">🔄 Reset to Default</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- System Info -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">📊 System Information</span>
+        </div>
+        <div style="padding:0.5rem 0;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;">
+                <div><strong>Version:</strong> <span id="sysInfoVersion">2.0.0</span></div>
+                <div><strong>Platform:</strong> <span id="sysInfoPlatform">Raspberry Pi 5</span></div>
+                <div><strong>Architecture:</strong> <span id="sysInfoArch">ARM Cortex-A76</span></div>
+                <div><strong>Uptime:</strong> <span id="sysInfoUptime">--</span></div>
+                <div><strong>Memory:</strong> <span id="sysInfoMemory">--</span></div>
+                <div><strong>Storage:</strong> <span id="sysInfoStorage">--</span></div>
+            </div>
+            <button class="btn btn-outline" onclick="refreshSystemInfo()" style="margin-top:0.75rem;">🔄 Refresh Info</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Settings-specific functions
+
+function clearApiToken() {
+    if (confirm('Clear stored API token?')) {
+        const api = new ApiClient();
+        api.setToken('');
+        document.getElementById('apiTokenInput').value = '';
+        showNotification('API token cleared', 'Info', 'info');
+    }
+}
+
+function saveRecordingSettings() {
+    const settings = {
+        resolution: document.getElementById('recordingResolution').value,
+        framerate: parseInt(document.getElementById('recordingFramerate').value),
+        quality: document.getElementById('recordingQuality').value,
+        container: document.getElementById('recordingContainer').value
+    };
+    
+    localStorage.setItem('recordingSettings', JSON.stringify(settings));
+    showNotification('Recording settings saved', 'Success', 'success');
+}
+
+function saveCloudSettings() {
+    const settings = {
+        provider: document.getElementById('cloudProviderSetting').value,
+        url: document.getElementById('cloudUrlSetting').value,
+        username: document.getElementById('cloudUsernameSetting').value,
+        password: document.getElementById('cloudPasswordSetting').value,
+        autoSync: document.getElementById('cloudAutoSyncSetting').checked
+    };
+    
+    localStorage.setItem('cloudSettings', JSON.stringify(settings));
+    showNotification('Cloud settings saved', 'Success', 'success');
+}
+
+async function testCloudConnection() {
+    try {
+        showNotification('Testing cloud connection...', 'Testing', 'info', 2000);
+        const api = new ApiClient();
+        const status = await api.getCloudStatus();
+        if (status.connected) {
+            showNotification('Cloud connection successful!', 'Success', 'success');
+        } else {
+            showNotification('Cloud connection failed. Check credentials.', 'Error', 'error');
+        }
+    } catch (error) {
+        showNotification('Cloud test failed: ' + error.message, 'Error', 'error');
+    }
+}
+
+function saveSystemSettings() {
+    const settings = {
+        logLevel: document.getElementById('logLevelSetting').value,
+        autoStart: document.getElementById('autoStartRecording').checked,
+        notifications: document.getElementById('enableNotifications').checked
+    };
+    
+    localStorage.setItem('systemSettings', JSON.stringify(settings));
+    showNotification('System settings saved', 'Success', 'success');
+}
+
+function exportAllSettings() {
+    const settings = {
+        recording: localStorage.getItem('recordingSettings'),
+        cloud: localStorage.getItem('cloudSettings'),
+        system: localStorage.getItem('systemSettings'),
+        token: localStorage.getItem('apiToken')
+    };
+    
+    const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `recording_station_settings_${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    showNotification('Settings exported', 'Success', 'success');
+}
+
+function importAllSettings() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const text = await file.text();
+        try {
+            const settings = JSON.parse(text);
+            if (settings.recording) localStorage.setItem('recordingSettings', settings.recording);
+            if (settings.cloud) localStorage.setItem('cloudSettings', settings.cloud);
+            if (settings.system) localStorage.setItem('systemSettings', settings.system);
+            if (settings.token) {
+                const api = new ApiClient();
+                api.setToken(settings.token);
+            }
+            showNotification('Settings imported successfully', 'Success', 'success');
+            // Reload settings UI
+            loadSettings();
+        } catch (error) {
+            showNotification('Failed to import settings: ' + error.message, 'Error', 'error');
+        }
+    };
+    input.click();
+}
+
+function resetAllSettings() {
+    if (!confirm('Reset all settings to default? This cannot be undone.')) return;
+    
+    localStorage.removeItem('apiToken');
+    localStorage.removeItem('recordingSettings');
+    localStorage.removeItem('cloudSettings');
+    localStorage.removeItem('systemSettings');
+    localStorage.removeItem('dashboardTheme');
+    
+    const api = new ApiClient();
+    api.setToken('');
+    
+    loadSettings();
+    showNotification('All settings reset to default', 'Info', 'info');
+}
+
+function loadSettings() {
+    // Load recording settings
+    const recSettings = safeJsonParse(localStorage.getItem('recordingSettings'));
+    if (recSettings) {
+        const resEl = document.getElementById('recordingResolution');
+        if (resEl) resEl.value = recSettings.resolution || '1920x1080';
+        const fpsEl = document.getElementById('recordingFramerate');
+        if (fpsEl) fpsEl.value = recSettings.framerate || 30;
+        const qualityEl = document.getElementById('recordingQuality');
+        if (qualityEl) qualityEl.value = recSettings.quality || 'high';
+        const containerEl = document.getElementById('recordingContainer');
+        if (containerEl) containerEl.value = recSettings.container || 'mp4';
+    }
+    
+    // Load cloud settings
+    const cloudSettings = safeJsonParse(localStorage.getItem('cloudSettings'));
+    if (cloudSettings) {
+        const providerEl = document.getElementById('cloudProviderSetting');
+        if (providerEl) providerEl.value = cloudSettings.provider || 'nextcloud';
+        const urlEl = document.getElementById('cloudUrlSetting');
+        if (urlEl) urlEl.value = cloudSettings.url || '';
+        const userEl = document.getElementById('cloudUsernameSetting');
+        if (userEl) userEl.value = cloudSettings.username || '';
+        const autoEl = document.getElementById('cloudAutoSyncSetting');
+        if (autoEl) autoEl.checked = cloudSettings.autoSync !== false;
+    }
+    
+    // Load system settings
+    const sysSettings = safeJsonParse(localStorage.getItem('systemSettings'));
+    if (sysSettings) {
+        const logEl = document.getElementById('logLevelSetting');
+        if (logEl) logEl.value = sysSettings.logLevel || 'info';
+        const autoEl = document.getElementById('autoStartRecording');
+        if (autoEl) autoEl.checked = sysSettings.autoStart || false;
+        const notifEl = document.getElementById('enableNotifications');
+        if (notifEl) notifEl.checked = sysSettings.notifications !== false;
+    }
+    
+    // Load token
+    const tokenEl = document.getElementById('apiTokenInput');
+    if (tokenEl) tokenEl.value = localStorage.getItem('apiToken') || '';
+}
+
+function refreshSystemInfo() {
+    const api = new ApiClient();
+    api.getStatus().then(status => {
+        document.getElementById('sysInfoUptime').textContent = formatDuration(status.uptime);
+        document.getElementById('sysInfoMemory').textContent = 
+            formatBytes(status.memory.used) + ' / ' + formatBytes(status.memory.total);
+        document.getElementById('sysInfoStorage').textContent = 
+            formatBytes(status.storage.used) + ' / ' + formatBytes(status.storage.total);
+    }).catch(() => {
+        // Use defaults
+    });
+}
+
+// Load settings on page load
+document.addEventListener('DOMContentLoaded', loadSettings);
+</script>

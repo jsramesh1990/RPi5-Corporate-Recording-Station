@@ -1,0 +1,69 @@
+Performance Test Summary
+File	Purpose	Key Test Cases
+benchmark.cpp	Performance benchmarks	Memory allocation, file I/O, video encoding, audio encoding, network, storage, CPU, GPU acceleration
+stress_test.cpp	Stress testing	Long-duration recording, concurrent operations, memory pressure, CPU load, error recovery
+Key Features
+
+    Benchmark Tests:
+
+        Memory allocation speed (small, medium, large, aligned, pool)
+
+        File I/O performance (sequential read/write, random read)
+
+        Video encoding (H.264 with/without hardware acceleration)
+
+        Audio encoding (AAC)
+
+        Network latency and throughput
+
+        Storage operations (file creation, directory scan, export)
+
+        CPU performance (integer, floating-point, memory copy)
+
+        GPU acceleration comparison
+
+    Stress Tests:
+
+        Long-duration recording (continuous recording with frame generation)
+
+        Concurrent operations (multiple threads performing different tasks)
+
+        Memory pressure (gradual memory allocation with random freeing)
+
+        CPU load (heavy computation across all cores)
+
+        Error recovery (simulated errors with recovery attempts)
+
+Running Tests
+bash
+
+# Build and run all performance tests
+cd build
+make test-performance
+
+# Run specific benchmark
+./tests/performance/benchmark
+
+# Run specific stress test
+./tests/performance/stress_test
+
+# Run with increased duration
+./tests/performance/stress_test --gtest_filter=StressTest.LongDurationRecording --gtest_repeat=3
+
+# Run benchmark with verbose output
+./tests/performance/benchmark --gtest_verbose=1
+
+# Generate benchmark report
+./tests/performance/benchmark --gtest_filter=PerformanceBenchmark.PerformanceSummary
+
+Performance Expectations (Raspberry Pi 5)
+Metric	Expected	Acceptable Range
+Memory allocation (1KB)	> 1M ops/s	> 500k ops/s
+Memory copy (100MB)	> 1 GB/s	> 500 MB/s
+Sequential write	> 100 MB/s	> 50 MB/s
+Sequential read	> 120 MB/s	> 60 MB/s
+H.264 encoding (640x480)	> 30 fps	> 15 fps
+H.264 encoding (HW)	> 60 fps	> 30 fps
+AAC encoding	> 10x realtime	> 5x realtime
+Network latency	< 50 ms	< 100 ms
+File creation	> 1000 files/s	> 500 files/s

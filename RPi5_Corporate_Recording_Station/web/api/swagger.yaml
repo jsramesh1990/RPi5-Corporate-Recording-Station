@@ -1,0 +1,1753 @@
+# 📁 Complete Web API Documentation
+
+Here is the complete Swagger/OpenAPI documentation for your Raspberry Pi 5 Corporate Recording Station project.
+
+---
+
+## 📂 `src/web/api/swagger.yaml`
+
+```yaml
+openapi: 3.0.3
+info:
+  title: RPi5 Corporate Recording Station API
+  description: |
+    # RPi5 Corporate Recording Station REST API
+    
+    This API provides comprehensive control and monitoring capabilities for the 
+    Raspberry Pi 5 Corporate Recording Station. It allows you to:
+    
+    - Control recording (start, stop, pause, resume)
+    - Monitor system status (CPU, memory, storage, temperature)
+    - Manage recordings (list, download, delete, archive)
+    - Configure cloud uploads and sync
+    - Monitor network and hardware status
+    - Control GPIO pins and peripherals
+    
+    ## Authentication
+    
+    API requests require a Bearer token in the `Authorization` header:
+    ```
+    Authorization: Bearer <your-api-token>
+    ```
+    
+    ## Rate Limiting
+    
+    - 100 requests per minute per IP
+    - 1000 requests per hour per IP
+    
+    ## Error Handling
+    
+    All errors return a standard format:
+    ```json
+    {
+      "error": "Error description",
+      "code": "ERROR_CODE",
+      "timestamp": "2026-07-08T10:30:45Z"
+    }
+    ```
+  version: 2.0.0
+  contact:
+    name: Support Team
+    email: support@recording-station.local
+    url: https://github.com/yourusername/rpi5-corporate-recording-station
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://recording-station.local/api/v1
+    description: Production server
+  - url: http://localhost:8080/api/v1
+    description: Development server
+
+tags:
+  - name: System
+    description: System status and management
+  - name: Recording
+    description: Recording control and management
+  - name: Storage
+    description: Storage management and monitoring
+  - name: Cloud
+    description: Cloud upload and sync operations
+  - name: Network
+    description: Network status and configuration
+  - name: Hardware
+    description: Hardware control (GPIO, UART, etc.)
+  - name: Health
+    description: Health checks and monitoring
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for API authentication
+
+  schemas:
+    # ============================================
+    # COMMON SCHEMAS
+    # ============================================
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+    
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Operation success status
+        message:
+          type: string
+          description: Success message
+        data:
+          type: object
+          description: Additional data
+
+    # ============================================
+    # SYSTEM SCHEMAS
+    # ============================================
+    
+    SystemStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [online, offline, degraded, maintenance]
+          description: System status
+        version:
+          type: string
+          description: Software version
+        uptime:
+          type: integer
+          description: System uptime in seconds
+        cpu_usage:
+          type: number
+          format: float
+          description: CPU usage percentage
+        cpu_temp:
+          type: number
+          format: float
+          description: CPU temperature in Celsius
+        memory:
+          type: object
+          properties:
+            total:
+              type: integer
+              description: Total memory in bytes
+            used:
+              type: integer
+              description: Used memory in bytes
+            free:
+              type: integer
+              description: Free memory in bytes
+            available:
+              type: integer
+              description: Available memory in bytes
+            percentage:
+              type: number
+              format: float
+              description: Memory usage percentage
+        swap:
+          type: object
+          properties:
+            total:
+              type: integer
+            used:
+              type: integer
+            free:
+              type: integer
+        storage:
+          type: object
+          properties:
+            total:
+              type: integer
+              description: Total storage in bytes
+            used:
+              type: integer
+              description: Used storage in bytes
+            free:
+              type: integer
+              description: Free storage in bytes
+            percentage:
+              type: number
+              format: float
+              description: Storage usage percentage
+        load_avg:
+          type: object
+          properties:
+            one_min:
+              type: number
+              format: float
+            five_min:
+              type: number
+              format: float
+            fifteen_min:
+              type: number
+              format: float
+        processes:
+          type: integer
+          description: Number of running processes
+        timestamp:
+          type: string
+          format: date-time
+          description: Status timestamp
+
+    # ============================================
+    # RECORDING SCHEMAS
+    # ============================================
+    
+    RecordingConfig:
+      type: object
+      properties:
+        width:
+          type: integer
+          minimum: 640
+          maximum: 4096
+          default: 1920
+          description: Video width in pixels
+        height:
+          type: integer
+          minimum: 480
+          maximum: 2160
+          default: 1080
+          description: Video height in pixels
+        framerate:
+          type: integer
+          minimum: 1
+          maximum: 120
+          default: 30
+          description: Video framerate
+        video_bitrate:
+          type: integer
+          minimum: 100000
+          maximum: 100000000
+          default: 4000000
+          description: Video bitrate in bps
+        audio_bitrate:
+          type: integer
+          minimum: 32000
+          maximum: 320000
+          default: 128000
+          description: Audio bitrate in bps
+        sample_rate:
+          type: integer
+          enum: [44100, 48000, 96000, 192000]
+          default: 48000
+          description: Audio sample rate in Hz
+        channels:
+          type: integer
+          enum: [1, 2, 4, 6, 8]
+          default: 2
+          description: Number of audio channels
+        video_codec:
+          type: string
+          enum: [h264, h265, mjpeg, vp8, vp9]
+          default: h264
+          description: Video codec
+        audio_codec:
+          type: string
+          enum: [aac, mp3, opus, flac, wav]
+          default: aac
+          description: Audio codec
+        container:
+          type: string
+          enum: [mp4, mkv, avi, mov, ts]
+          default: mp4
+          description: Container format
+        max_duration:
+          type: integer
+          minimum: 0
+          default: 0
+          description: Maximum recording duration in seconds (0 = unlimited)
+        max_file_size:
+          type: integer
+          minimum: 0
+          default: 0
+          description: Maximum file size in bytes (0 = unlimited)
+        quality:
+          type: string
+          enum: [low, medium, high, ultra]
+          default: high
+          description: Recording quality preset
+        hardware_acceleration:
+          type: boolean
+          default: true
+          description: Enable hardware acceleration
+
+    RecordingStatus:
+      type: object
+      properties:
+        state:
+          type: string
+          enum: [idle, recording, paused, stopping, error]
+          description: Recording state
+        filename:
+          type: string
+          description: Current recording filename
+        file_size:
+          type: integer
+          description: Current file size in bytes
+        duration:
+          type: integer
+          description: Recording duration in seconds
+        video_frames:
+          type: integer
+          description: Number of video frames recorded
+        audio_samples:
+          type: integer
+          description: Number of audio samples recorded
+        fps:
+          type: number
+          format: float
+          description: Actual frames per second
+        bitrate:
+          type: number
+          format: float
+          description: Actual bitrate in bps
+        start_time:
+          type: string
+          format: date-time
+          description: Recording start time
+        estimated_end:
+          type: string
+          format: date-time
+          description: Estimated end time
+
+    RecordingInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Recording identifier
+        filename:
+          type: string
+          description: Filename
+        path:
+          type: string
+          description: Full file path
+        size:
+          type: integer
+          description: File size in bytes
+        duration:
+          type: integer
+          description: Duration in seconds
+        created:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        modified:
+          type: string
+          format: date-time
+          description: Last modified timestamp
+        format:
+          type: string
+          description: Container format
+        video:
+          type: object
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+            codec:
+              type: string
+            framerate:
+              type: number
+              format: float
+        audio:
+          type: object
+          properties:
+            codec:
+              type: string
+            sample_rate:
+              type: integer
+            channels:
+              type: integer
+        thumbnail:
+          type: string
+          description: Thumbnail URL (base64 or path)
+        metadata:
+          type: object
+          description: Additional metadata
+
+    # ============================================
+    # STORAGE SCHEMAS
+    # ============================================
+    
+    StorageStatus:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total storage in bytes
+        used:
+          type: integer
+          description: Used storage in bytes
+        free:
+          type: integer
+          description: Free storage in bytes
+        available:
+          type: integer
+          description: Available storage in bytes
+        percentage:
+          type: number
+          format: float
+          description: Usage percentage
+        file_count:
+          type: integer
+          description: Number of files
+        directory_count:
+          type: integer
+          description: Number of directories
+        largest_file:
+          type: object
+          properties:
+            name:
+              type: string
+            size:
+              type: integer
+        file_types:
+          type: object
+          additionalProperties:
+            type: integer
+          description: File type distribution
+        mount_point:
+          type: string
+          description: Mount point
+        filesystem:
+          type: string
+          description: Filesystem type
+
+    FileInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Filename
+        path:
+          type: string
+          description: Full path
+        size:
+          type: integer
+          description: File size in bytes
+        type:
+          type: string
+          description: File type/extension
+        created:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        modified:
+          type: string
+          format: date-time
+          description: Modification timestamp
+        accessed:
+          type: string
+          format: date-time
+          description: Access timestamp
+        permissions:
+          type: string
+          description: File permissions
+        owner:
+          type: string
+          description: File owner
+        group:
+          type: string
+          description: File group
+        checksum:
+          type: string
+          description: SHA-256 checksum
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Additional metadata
+
+    # ============================================
+    # CLOUD SCHEMAS
+    # ============================================
+    
+    CloudStatus:
+      type: object
+      properties:
+        connected:
+          type: boolean
+          description: Cloud connection status
+        provider:
+          type: string
+          enum: [nextcloud, onedrive, s3, webdav]
+          description: Cloud provider
+        username:
+          type: string
+          description: Connected username
+        url:
+          type: string
+          description: Cloud URL
+        total_space:
+          type: integer
+          description: Total cloud space in bytes
+        used_space:
+          type: integer
+          description: Used cloud space in bytes
+        free_space:
+          type: integer
+          description: Free cloud space in bytes
+        syncing:
+          type: boolean
+          description: Sync in progress
+        last_sync:
+          type: string
+          format: date-time
+          description: Last sync timestamp
+        queue_size:
+          type: integer
+          description: Files pending upload
+
+    CloudUpload:
+      type: object
+      properties:
+        file:
+          type: string
+          description: Local file path
+        remote_path:
+          type: string
+          description: Remote destination path
+        provider:
+          type: string
+          enum: [nextcloud, onedrive, s3, webdav]
+          description: Cloud provider to use
+        overwrite:
+          type: boolean
+          default: false
+          description: Overwrite existing file
+
+    CloudUploadResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        file:
+          type: string
+          description: Local file path
+        remote_path:
+          type: string
+          description: Remote file path
+        size:
+          type: integer
+          description: File size in bytes
+        provider:
+          type: string
+          description: Cloud provider used
+        uploaded:
+          type: string
+          format: date-time
+          description: Upload timestamp
+
+    # ============================================
+    # NETWORK SCHEMAS
+    # ============================================
+    
+    NetworkStatus:
+      type: object
+      properties:
+        interface:
+          type: string
+          description: Network interface name
+        type:
+          type: string
+          enum: [ethernet, wifi, loopback]
+          description: Interface type
+        state:
+          type: string
+          enum: [up, down, unknown]
+          description: Interface state
+        ip_address:
+          type: string
+          description: IP address
+        mac_address:
+          type: string
+          description: MAC address
+        netmask:
+          type: string
+          description: Netmask
+        gateway:
+          type: string
+          description: Gateway address
+        dns_servers:
+          type: array
+          items:
+            type: string
+          description: DNS servers
+        bytes_sent:
+          type: integer
+          description: Bytes sent
+        bytes_received:
+          type: integer
+          description: Bytes received
+        packets_sent:
+          type: integer
+          description: Packets sent
+        packets_received:
+          type: integer
+          description: Packets received
+        speed:
+          type: integer
+          description: Link speed in Mbps
+        wifi_ssid:
+          type: string
+          description: WiFi SSID (if applicable)
+        wifi_signal:
+          type: integer
+          description: WiFi signal strength in dBm
+
+    WiFiConfig:
+      type: object
+      required:
+        - ssid
+      properties:
+        ssid:
+          type: string
+          description: WiFi network SSID
+        password:
+          type: string
+          description: WiFi password
+        security:
+          type: string
+          enum: [none, wpa, wpa2, wpa3]
+          default: wpa2
+          description: Security type
+        hidden:
+          type: boolean
+          default: false
+          description: Hidden network
+
+    # ============================================
+    # HARDWARE SCHEMAS
+    # ============================================
+    
+    HardwareStatus:
+      type: object
+      properties:
+        gpio:
+          type: array
+          items:
+            type: object
+            properties:
+              pin:
+                type: integer
+              name:
+                type: string
+              value:
+                type: boolean
+              direction:
+                type: string
+                enum: [in, out]
+              pull:
+                type: string
+                enum: [none, up, down]
+              interrupt:
+                type: boolean
+              changes:
+                type: integer
+        uart:
+          type: object
+          properties:
+            device:
+              type: string
+            baud:
+              type: integer
+            state:
+              type: string
+              enum: [open, closed, error]
+            bytes_sent:
+              type: integer
+            bytes_received:
+              type: integer
+        camera:
+          type: object
+          properties:
+            detected:
+              type: boolean
+            device:
+              type: string
+            resolution:
+              type: string
+            framerate:
+              type: integer
+            temperature:
+              type: number
+              format: float
+        audio:
+          type: object
+          properties:
+            detected:
+              type: boolean
+            device:
+              type: string
+            sample_rate:
+              type: integer
+            channels:
+              type: integer
+
+    GPIOPinConfig:
+      type: object
+      properties:
+        pin:
+          type: integer
+          description: GPIO pin number
+        direction:
+          type: string
+          enum: [in, out]
+          description: Pin direction
+        value:
+          type: boolean
+          description: Pin value (for output)
+        pull:
+          type: string
+          enum: [none, up, down]
+          description: Pull resistor
+        name:
+          type: string
+          description: Pin name
+
+    # ============================================
+    # HEALTH SCHEMAS
+    # ============================================
+    
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+          description: Overall health status
+        checks:
+          type: object
+          properties:
+            system:
+              type: object
+              properties:
+                status:
+                  type: string
+                message:
+                  type: string
+            recording:
+              type: object
+              properties:
+                status:
+                  type: string
+                message:
+                  type: string
+            storage:
+              type: object
+              properties:
+                status:
+                  type: string
+                message:
+                  type: string
+            cloud:
+              type: object
+              properties:
+                status:
+                  type: string
+                message:
+                  type: string
+            network:
+              type: object
+              properties:
+                status:
+                  type: string
+                message:
+                  type: string
+            hardware:
+              type: object
+              properties:
+                status:
+                  type: string
+                message:
+                  type: string
+        timestamp:
+          type: string
+          format: date-time
+          description: Check timestamp
+
+  parameters:
+    LimitParam:
+      name: limit
+      in: query
+      description: Maximum number of items to return
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 100
+    OffsetParam:
+      name: offset
+      in: query
+      description: Number of items to skip
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    SortParam:
+      name: sort
+      in: query
+      description: Sort field
+      schema:
+        type: string
+        enum: [date, size, name, duration]
+        default: date
+    OrderParam:
+      name: order
+      in: query
+      description: Sort order
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: desc
+
+paths:
+  # ============================================
+  # SYSTEM ENDPOINTS
+  # ============================================
+  
+  /system/status:
+    get:
+      tags:
+        - System
+      summary: Get system status
+      description: Returns comprehensive system status including CPU, memory, storage, and uptime
+      operationId: getSystemStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: System status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemStatus'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /system/version:
+    get:
+      tags:
+        - System
+      summary: Get system version
+      description: Returns software version information
+      operationId: getSystemVersion
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Version retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                  build_date:
+                    type: string
+                  build_time:
+                    type: string
+                  platform:
+                    type: string
+                  architecture:
+                    type: string
+                  features:
+                    type: array
+                    items:
+                      type: string
+  
+  /system/reboot:
+    post:
+      tags:
+        - System
+      summary: Reboot system
+      description: Reboots the Raspberry Pi
+      operationId: rebootSystem
+      security:
+        - bearerAuth: []
+      responses:
+        '202':
+          description: Reboot initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  
+  /system/shutdown:
+    post:
+      tags:
+        - System
+      summary: Shutdown system
+      description: Shuts down the Raspberry Pi
+      operationId: shutdownSystem
+      security:
+        - bearerAuth: []
+      responses:
+        '202':
+          description: Shutdown initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  # ============================================
+  # RECORDING ENDPOINTS
+  # ============================================
+  
+  /recording/status:
+    get:
+      tags:
+        - Recording
+      summary: Get recording status
+      description: Returns current recording status
+      operationId: getRecordingStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Recording status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordingStatus'
+  
+  /recording/start:
+    post:
+      tags:
+        - Recording
+      summary: Start recording
+      description: Starts a new recording with optional configuration
+      operationId: startRecording
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Recording configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordingConfig'
+      responses:
+        '200':
+          description: Recording started successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          filename:
+                            type: string
+                          start_time:
+                            type: string
+                            format: date-time
+        '400':
+          description: Invalid configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Recording already in progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /recording/stop:
+    post:
+      tags:
+        - Recording
+      summary: Stop recording
+      description: Stops the current recording
+      operationId: stopRecording
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Recording stopped successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          filename:
+                            type: string
+                          duration:
+                            type: integer
+                          size:
+                            type: integer
+        '400':
+          description: No recording in progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /recording/pause:
+    post:
+      tags:
+        - Recording
+      summary: Pause recording
+      description: Pauses the current recording
+      operationId: pauseRecording
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Recording paused successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: No recording in progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /recording/resume:
+    post:
+      tags:
+        - Recording
+      summary: Resume recording
+      description: Resumes a paused recording
+      operationId: resumeRecording
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Recording resumed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: No paused recording found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /recording/list:
+    get:
+      tags:
+        - Recording
+      summary: List recordings
+      description: Returns a list of recorded files
+      operationId: listRecordings
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/SortParam'
+        - $ref: '#/components/parameters/OrderParam'
+      responses:
+        '200':
+          description: Recordings list retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  recordings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RecordingInfo'
+  
+  /recording/{id}:
+    get:
+      tags:
+        - Recording
+      summary: Get recording details
+      description: Returns detailed information about a specific recording
+      operationId: getRecording
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Recording ID or filename
+      responses:
+        '200':
+          description: Recording details retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordingInfo'
+        '404':
+          description: Recording not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    delete:
+      tags:
+        - Recording
+      summary: Delete recording
+      description: Deletes a specific recording
+      operationId: deleteRecording
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Recording ID or filename
+      responses:
+        '200':
+          description: Recording deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: Recording not found
+  
+  /recording/{id}/download:
+    get:
+      tags:
+        - Recording
+      summary: Download recording
+      description: Downloads a recording file
+      operationId: downloadRecording
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Recording ID or filename
+      responses:
+        '200':
+          description: Recording file download
+          content:
+            video/mp4:
+              schema:
+                type: string
+                format: binary
+            video/mkv:
+              schema:
+                type: string
+                format: binary
+            video/avi:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Recording not found
+
+  # ============================================
+  # STORAGE ENDPOINTS
+  # ============================================
+  
+  /storage/status:
+    get:
+      tags:
+        - Storage
+      summary: Get storage status
+      description: Returns storage usage statistics
+      operationId: getStorageStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Storage status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageStatus'
+  
+  /storage/files:
+    get:
+      tags:
+        - Storage
+      summary: List files
+      description: Returns a list of files in storage
+      operationId: listFiles
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/OffsetParam'
+        - name: path
+          in: query
+          schema:
+            type: string
+            default: /
+          description: Directory path
+        - name: type
+          in: query
+          schema:
+            type: string
+          description: Filter by file type
+        - name: pattern
+          in: query
+          schema:
+            type: string
+          description: Filter by name pattern
+      responses:
+        '200':
+          description: Files list retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  files:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FileInfo'
+  
+  /storage/cleanup:
+    post:
+      tags:
+        - Storage
+      summary: Clean up storage
+      description: Removes old or temporary files
+      operationId: cleanupStorage
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                age_days:
+                  type: integer
+                  description: Files older than this will be removed
+                dry_run:
+                  type: boolean
+                  default: false
+                  description: Only simulate cleanup
+      responses:
+        '200':
+          description: Cleanup completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  removed:
+                    type: integer
+                  space_freed:
+                    type: integer
+                  files:
+                    type: array
+                    items:
+                      type: string
+
+  # ============================================
+  # CLOUD ENDPOINTS
+  # ============================================
+  
+  /cloud/status:
+    get:
+      tags:
+        - Cloud
+      summary: Get cloud status
+      description: Returns cloud connection status
+      operationId: getCloudStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Cloud status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudStatus'
+  
+  /cloud/connect:
+    post:
+      tags:
+        - Cloud
+      summary: Connect to cloud
+      description: Establishes connection to cloud provider
+      operationId: connectCloud
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  enum: [nextcloud, onedrive, s3, webdav]
+                url:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+                api_key:
+                  type: string
+      responses:
+        '200':
+          description: Cloud connected successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /cloud/disconnect:
+    post:
+      tags:
+        - Cloud
+      summary: Disconnect from cloud
+      description: Disconnects from cloud provider
+      operationId: disconnectCloud
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Cloud disconnected successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+  
+  /cloud/upload:
+    post:
+      tags:
+        - Cloud
+      summary: Upload file to cloud
+      description: Uploads a file to the cloud
+      operationId: uploadToCloud
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloudUpload'
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudUploadResponse'
+        '404':
+          description: File not found
+        '400':
+          description: Invalid request
+  
+  /cloud/sync:
+    post:
+      tags:
+        - Cloud
+      summary: Sync with cloud
+      description: Synchronizes local recordings with cloud
+      operationId: syncCloud
+      security:
+        - bearerAuth: []
+      responses:
+        '202':
+          description: Sync initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  # ============================================
+  # NETWORK ENDPOINTS
+  # ============================================
+  
+  /network/status:
+    get:
+      tags:
+        - Network
+      summary: Get network status
+      description: Returns network interface status
+      operationId: getNetworkStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Network status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkStatus'
+  
+  /network/wifi/scan:
+    get:
+      tags:
+        - Network
+      summary: Scan WiFi networks
+      description: Returns list of available WiFi networks
+      operationId: scanWiFi
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: WiFi scan completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  networks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ssid:
+                          type: string
+                        signal:
+                          type: integer
+                        security:
+                          type: string
+                        channel:
+                          type: integer
+  
+  /network/wifi/connect:
+    post:
+      tags:
+        - Network
+      summary: Connect to WiFi
+      description: Connects to a WiFi network
+      operationId: connectWiFi
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WiFiConfig'
+      responses:
+        '200':
+          description: WiFi connected successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Invalid configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /network/wifi/disconnect:
+    post:
+      tags:
+        - Network
+      summary: Disconnect from WiFi
+      description: Disconnects from current WiFi network
+      operationId: disconnectWiFi
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: WiFi disconnected successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  # ============================================
+  # HARDWARE ENDPOINTS
+  # ============================================
+  
+  /hardware/status:
+    get:
+      tags:
+        - Hardware
+      summary: Get hardware status
+      description: Returns GPIO, UART, camera, and audio status
+      operationId: getHardwareStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Hardware status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HardwareStatus'
+  
+  /hardware/gpio:
+    get:
+      tags:
+        - Hardware
+      summary: Get GPIO status
+      description: Returns all GPIO pin states
+      operationId: getGPIOStatus
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: GPIO status retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pins:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        pin:
+                          type: integer
+                        name:
+                          type: string
+                        value:
+                          type: boolean
+                        direction:
+                          type: string
+                        pull:
+                          type: string
+                        interrupt:
+                          type: boolean
+  
+  /hardware/gpio/{pin}:
+    get:
+      tags:
+        - Hardware
+      summary: Get GPIO pin state
+      description: Returns state of a specific GPIO pin
+      operationId: getGPIOPin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pin
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: GPIO pin number
+      responses:
+        '200':
+          description: GPIO pin state retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pin:
+                    type: integer
+                  value:
+                    type: boolean
+                  direction:
+                    type: string
+                  pull:
+                    type: string
+    
+    post:
+      tags:
+        - Hardware
+      summary: Set GPIO pin
+      description: Sets the state of a GPIO pin
+      operationId: setGPIOPin
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pin
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: GPIO pin number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: boolean
+                  description: Pin value
+                direction:
+                  type: string
+                  enum: [in, out]
+                  description: Pin direction
+              required:
+                - value
+      responses:
+        '200':
+          description: GPIO pin updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Invalid pin or value
+
+  # ============================================
+  # HEALTH ENDPOINTS
+  # ============================================
+  
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Returns system health status
+      operationId: healthCheck
+      security: []
+      responses:
+        '200':
+          description: System is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+        '503':
+          description: System is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+  
+  /health/live:
+    get:
+      tags:
+        - Health
+      summary: Liveness check
+      description: Returns if the service is alive
+      operationId: livenessCheck
+      security: []
+      responses:
+        '200':
+          description: Service is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: alive
+                  timestamp:
+                    type: string
+                    format: date-time
+  
+  /health/ready:
+    get:
+      tags:
+        - Health
+      summary: Readiness check
+      description: Returns if the service is ready to accept requests
+      operationId: readinessCheck
+      security: []
+      responses:
+        '200':
+          description: Service is ready
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ready
+                  checks:
+                    type: object
+                    properties:
+                      recording:
+                        type: string
+                      storage:
+                        type: string
+                      cloud:
+                        type: string
+
+  # ============================================
+  # METRICS ENDPOINTS
+  # ============================================
+  
+  /metrics:
+    get:
+      tags:
+        - System
+      summary: Get metrics
+      description: Returns Prometheus-style metrics
+      operationId: getMetrics
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Metrics retrieved
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Prometheus metrics in text format
+
+security:
+  - bearerAuth: []
+

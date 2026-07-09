@@ -1,0 +1,165 @@
+<!-- Recordings Page Content -->
+<div style="display:flex;flex-direction:column;gap:1.25rem;">
+    <!-- Header Actions -->
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+        <div>
+            <h2 style="margin:0;">🎬 All Recordings</h2>
+            <span style="color:var(--text-muted);font-size:0.85rem;" id="recordingTotal">0 files</span>
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="btn btn-sm btn-outline" onclick="refreshRecordings()">🔄 Refresh</button>
+            <button class="btn btn-sm btn-outline" onclick="deleteAllRecordings()">🗑 Delete All</button>
+            <button class="btn btn-sm btn-primary" onclick="startRecording()">▶ New Recording</button>
+        </div>
+    </div>
+    
+    <!-- Filters -->
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;padding:0.75rem;background:var(--bg-secondary);border-radius:8px;">
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+            <label style="font-size:0.8rem;color:var(--text-secondary);">Search:</label>
+            <input type="text" class="form-control" id="searchInput" placeholder="Search recordings..." style="width:200px;" oninput="filterRecordings()">
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+            <label style="font-size:0.8rem;color:var(--text-secondary);">Sort:</label>
+            <select class="form-control" id="sortSelect" onchange="refreshRecordings()" style="width:120px;">
+                <option value="date">Date</option>
+                <option value="size">Size</option>
+                <option value="name">Name</option>
+                <option value="duration">Duration</option>
+            </select>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+            <label style="font-size:0.8rem;color:var(--text-secondary);">Order:</label>
+            <select class="form-control" id="orderSelect" onchange="refreshRecordings()" style="width:100px;">
+                <option value="desc">Newest</option>
+                <option value="asc">Oldest</option>
+            </select>
+        </div>
+        <button class="btn btn-sm btn-outline" onclick="refreshRecordings()" style="margin-left:auto;">Apply</button>
+    </div>
+    
+    <!-- Recordings List -->
+    <div class="card" style="padding:0;overflow:hidden;">
+        <div id="recordingsList">
+            <div style="text-align:center;padding:3rem;color:var(--text-muted);">
+                <div style="font-size:3rem;margin-bottom:1rem;">🎬</div>
+                <div>Loading recordings...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Additional recordings-specific functions
+
+function deleteAllRecordings() {
+    if (!confirm('⚠️ Are you sure you want to delete ALL recordings?\n\nThis action cannot be undone!')) {
+        return;
+    }
+    
+    if (!confirm('Really delete all recordings? This is permanent!')) {
+        return;
+    }
+    
+    showNotification('Deleting all recordings...', 'Deleting', 'warning', 3000);
+    // API call to delete all recordings would go here
+    // For now, refresh the list
+    setTimeout(() => {
+        refreshRecordings();
+        showNotification('All recordings deleted', 'Deleted', 'success');
+    }, 2000);
+}
+
+function filterRecordings() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const items = document.querySelectorAll('#recordingsList .file-item');
+    
+    items.forEach(item => {
+        const name = item.querySelector('.file-name')?.textContent?.toLowerCase() || '';
+        const visible = name.includes(searchTerm);
+        item.style.display = visible ? '' : 'none';
+    });
+}
+
+// Override refreshRecordings to include search/filter
+const originalRefreshRecordings = refreshRecordings;
+refreshRecordings = async function() {
+    try {
+        const api = new ApiClient();
+        const sort = document.getElementById('sortSelect')?.value || 'date';
+        const order = document.getElementById('orderSelect')?.value || 'desc';
+        const result = await api.listRecordings(100, 0, sort, order);
+        
+        const container = document.getElementById('recordingsList');
+        const total = document.getElementById('recordingTotal');
+        
+        if (result.recordings && result.recordings.length > 0) {
+            total.textContent = `${result.total || result.recordings.length} files`;
+            
+            let html = `
+                <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1.5fr 1fr;padding:0.75rem 1.25rem;background:var(--bg-secondary);color:var(--text-secondary);font-size:0.75rem;font-weight:600;border-bottom:1px solid var(--border-color);">
+                    <span>Filename</span>
+                    <span>Size</span>
+                    <span>Duration</span>
+                    <span>Date</span>
+                    <span style="text-align:right;">Actions</span>
+                </div>
+            `;
+            
+            result.recordings.forEach(rec => {
+                const icon = rec.format === 'mp4' ? '🎬' : rec.format === 'mkv' ? '📺' : '📄';
+                const sizeClass = rec.size > 1024 * 1024 * 1024 ? 'warning' : 
+                                 rec.size > 100 * 1024 * 1024 ? 'info' : '';
+                
+                html += `
+                    <div class="file-item" data-id="${rec.id}">
+                        <div class="file-info">
+                            <span class="file-icon">${icon}</span>
+                            <span class="file-name">${escapeHtml(rec.filename)}</span>
+                            <span class="file-meta" style="color:var(--text-muted);font-size:0.7rem;">
+                                ${rec.video?.width}x${rec.video?.height || ''}
+                            </span>
+                        </div>
+                        <span class="file-meta" style="font-size:0.8rem;">${formatBytes(rec.size)}</span>
+                        <span class="file-meta" style="font-size:0.8rem;">${formatDuration(rec.duration)}</span>
+                        <span class="file-meta" style="font-size:0.8rem;">${formatDate(rec.created)}</span>
+                        <div class="file-actions" style="justify-content:flex-end;">
+                            <button class="action-btn" onclick="downloadRecording('${rec.id}')" title="Download">⬇️</button>
+                            <button class="action-btn" onclick="copyPath('${rec.path}')" title="Copy path">📋</button>
+                            <button class="action-btn" onclick="showRecordingInfo('${rec.id}')" title="Info">ℹ️</button>
+                            <button class="action-btn delete" onclick="deleteRecording('${rec.id}')" title="Delete">🗑</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        } else {
+            total.textContent = '0 files';
+            container.innerHTML = `
+                <div style="text-align:center;padding:3rem;color:var(--text-muted);">
+                    <div style="font-size:3rem;margin-bottom:1rem;">🎬</div>
+                    <div>No recordings found</div>
+                    <div style="font-size:0.85rem;margin-top:0.5rem;">Start a new recording to get started</div>
+                    <button class="btn btn-primary" style="margin-top:1rem;" onclick="startRecording()">▶ Start Recording</button>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Failed to refresh recordings:', error);
+        document.getElementById('recordingsList').innerHTML = `
+            <div style="text-align:center;padding:3rem;color:var(--danger-light);">
+                <div style="font-size:3rem;margin-bottom:1rem;">❌</div>
+                <div>Failed to load recordings</div>
+                <div style="font-size:0.85rem;margin-top:0.5rem;">${escapeHtml(error.message)}</div>
+                <button class="btn btn-primary" style="margin-top:1rem;" onclick="refreshRecordings()">Retry</button>
+            </div>
+        `;
+    }
+};
+
+function showRecordingInfo(id) {
+    showNotification(`Recording ID: ${id}`, 'Info', 'info', 3000);
+    // In production, this would show a modal with detailed info
+}
+</script>

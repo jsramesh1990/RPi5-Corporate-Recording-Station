@@ -1,0 +1,71 @@
+HTML Templates Summary
+File	Purpose	Key Features
+index.html	Main application layout	Sidebar, header, content area, notifications, WebSocket integration
+dashboard.html	Dashboard page	Metrics, recording controls, charts, recent recordings, system status, GPIO
+recordings.html	Recordings management	File list, search, filters, sorting, delete operations
+settings.html	Settings management	API token, recording settings, cloud settings, system settings, import/export
+Key Features
+
+    index.html:
+
+        Complete application layout
+
+        Sidebar navigation with icons
+
+        Header with status indicators
+
+        WebSocket integration for real-time updates
+
+        Notification system
+
+    dashboard.html:
+
+        Real-time metrics (CPU, Memory, Storage, Uptime, Network)
+
+        Recording controls with status indicator
+
+        Charts (CPU, Memory, Network)
+
+        Recent recordings list
+
+        System status grid
+
+        GPIO quick status
+
+    recordings.html:
+
+        Search and filter
+
+        Sort by date, size, name, duration
+
+        Delete operations with confirmation
+
+        File information display
+
+    settings.html:
+
+        API token management
+
+        Recording settings (resolution, framerate, quality, container)
+
+        Cloud settings (provider, URL, credentials, auto-sync)
+
+        System settings (log level, auto-start, notifications)
+
+        Import/Export settings
+
+        System information display
+
+Integration
+
+All templates integrate with:
+
+    style.css and dashboard.css for styling
+
+    script.js for core functionality
+
+    dashboard.js for dashboard features
+
+    websocket.js for real-time updates
+
+    API client for backend communication

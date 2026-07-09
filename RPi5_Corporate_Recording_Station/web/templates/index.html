@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPi5 Corporate Recording Station</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎥</text></svg>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="RPi5 Corporate Recording Station - Professional video and audio recording system">
+    <meta name="theme-color" content="#0a0e17">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo">🎥</div>
+                <span class="brand-text">Recording Station</span>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">Main</div>
+                <a class="nav-item active" data-page="dashboard" href="#">
+                    <span class="icon">📊</span>
+                    Dashboard
+                </a>
+                <a class="nav-item" data-page="recordings" href="#">
+                    <span class="icon">🎬</span>
+                    Recordings
+                    <span class="badge" id="recordingCount">0</span>
+                </a>
+                <a class="nav-item" data-page="storage" href="#">
+                    <span class="icon">💾</span>
+                    Storage
+                </a>
+                
+                <div class="nav-section">Services</div>
+                <a class="nav-item" data-page="cloud" href="#">
+                    <span class="icon">☁️</span>
+                    Cloud
+                    <span class="badge" id="cloudStatusBadge" style="background:var(--text-muted);">offline</span>
+                </a>
+                <a class="nav-item" data-page="network" href="#">
+                    <span class="icon">🌐</span>
+                    Network
+                </a>
+                <a class="nav-item" data-page="hardware" href="#">
+                    <span class="icon">🔌</span>
+                    Hardware
+                </a>
+                
+                <div class="nav-section">System</div>
+                <a class="nav-item" data-page="logs" href="#">
+                    <span class="icon">📋</span>
+                    Logs
+                </a>
+                <a class="nav-item" data-page="settings" href="#">
+                    <span class="icon">⚙️</span>
+                    Settings
+                </a>
+            </div>
+            
+            <div class="sidebar-footer">
+                <span class="version">v2.0.0</span>
+                <span style="font-size:0.65rem;">RPi5 | Cortex-A76</span>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                        ☰
+                    </button>
+                    <span class="page-title" id="pageTitle">Dashboard</span>
+                </div>
+                
+                <div class="header-right">
+                    <div class="status-indicator">
+                        <span class="dot online" id="statusDot"></span>
+                        <span id="statusText">Online</span>
+                    </div>
+                    
+                    <span class="time-display" id="timeDisplay">--:--:--</span>
+                    
+                    <div class="user-menu" title="User settings">
+                        <div class="avatar">👤</div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Content Area -->
+            <div class="content-area" id="contentArea">
+                <!-- Page content loaded dynamically -->
+                <div style="display:flex;justify-content:center;align-items:center;height:400px;color:var(--text-muted);">
+                    <div style="text-align:center;">
+                        <div style="font-size:3rem;margin-bottom:1rem;">🎥</div>
+                        <div>Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Notification Container -->
+    <div class="toast-container" id="notificationContainer"></div>
+    
+    <!-- JavaScript -->
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/websocket.js"></script>
+    
+    <!-- Initialize Application -->
+    <script>
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('RPi5 Corporate Recording Station v2.0.0');
+            console.log('Platform: Raspberry Pi 5 (ARM Cortex-A76)');
+            
+            // Initialize WebSocket connection
+            const wsManager = getWebSocketManager();
+            wsManager.notifyOpen(() => {
+                console.log('WebSocket connected');
+                updateConnectionStatus(true);
+            });
+            wsManager.notifyClose(() => {
+                console.log('WebSocket disconnected');
+                updateConnectionStatus(false);
+            });
+            
+            // Set up WebSocket event handlers
+            wsManager.on('recording.started', (data) => {
+                showNotification(`Recording started: ${data.filename}`, 'Recording', 'success');
+            });
+            
+            wsManager.on('recording.stopped', (data) => {
+                showNotification(`Recording stopped: ${data.filename}`, 'Recording', 'info');
+            });
+            
+            wsManager.on('cloud.synced', (data) => {
+                showNotification(`Cloud sync complete: ${data.synced} files`, 'Cloud', 'success');
+                updateCloudBadge(true);
+            });
+            
+            wsManager.on('system.status', (data) => {
+                updateSystemIndicators(data);
+            });
+            
+            // Connect WebSocket
+            wsManager.connect();
+        });
+        
+        // Update connection status
+        function updateConnectionStatus(connected) {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            
+            if (connected) {
+                dot.className = 'dot online';
+                text.textContent = 'Online';
+            } else {
+                dot.className = 'dot offline';
+                text.textContent = 'Reconnecting...';
+            }
+        }
+        
+        // Update cloud badge
+        function updateCloudBadge(connected) {
+            const badge = document.getElementById('cloudStatusBadge');
+            if (badge) {
+                badge.textContent = connected ? 'online' : 'offline';
+                badge.style.background = connected ? 'var(--success)' : 'var(--text-muted)';
+            }
+        }
+        
+        // Update system indicators
+        function updateSystemIndicators(data) {
+            // Update recording count badge
+            if (data.recordings !== undefined) {
+                const badge = document.getElementById('recordingCount');
+                if (badge) {
+                    badge.textContent = data.recordings;
+                }
+            }
+        }
+        
+        // Helper: Show notification (for non-DOM-ready use)
+        function showNotification(message, title, type, duration) {
+            if (typeof window.showNotification === 'function') {
+                window.showNotification(message, title, type, duration);
+            } else {
+                console.log(`[${type}] ${title}: ${message}`);
+            }
+        }
+    </script>
+</body>
+</html>

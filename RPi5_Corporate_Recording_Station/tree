@@ -1,0 +1,256 @@
+rpi5-corporate-recording-station/
+├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml                    # ✅ Keep - CI/CD pipeline
+│   │   ├── release.yml               # ✅ Keep - Automated releases
+│   │   └── codeql-analysis.yml       # ✨ ADD - Security scanning
+│   └── ISSUE_TEMPLATE/
+│       ├── bug_report.md             # ✅ Keep
+│       ├── feature_request.md        # ✅ Keep
+│       └── hardware_issue.md         # ✨ ADD - Hardware-specific issues
+│
+├── docs/
+│   ├── architecture/
+│   │   ├── system-architecture.md    # ✅ Keep
+│   │   ├── memory-management.md      # ✅ Keep
+│   │   ├── deployment-guide.md       # ✅ Keep
+│   │   └── hardware-integration.md   # ✨ ADD - Hardware-software interface
+│   ├── api/
+│   │   ├── rest-api.md               # ✅ Keep
+│   │   ├── websocket-api.md          # ✅ Keep
+│   │   └── uart-commands.md          # ✨ ADD - UART protocol documentation
+│   ├── user-guide/
+│   │   ├── quick-start.md            # ✨ ADD - 5-minute setup guide
+│   │   ├── recording-guide.md        # ✨ ADD - How to record
+│   │   └── troubleshooting.md        # ✨ ADD - Common issues
+│   └── screenshots/
+│       ├── dashboard.png             # ✅ Keep
+│       ├── monitoring.png            # ✅ Keep
+│       ├── uart-console.png          # ✅ Keep
+│       └── hardware-setup.jpg        # ✨ ADD - Physical setup photo
+│
+├── src/
+│   ├── core/
+│   │   ├── StorageMonitor.cpp        # ✅ Keep
+│   │   ├── StorageMonitor.hpp        # ✅ Keep
+│   │   ├── FileMetadata.cpp          # ✅ Keep
+│   │   ├── FileMetadata.hpp          # ✅ Keep
+│   │   ├── MemoryManager.cpp         # ✅ Keep
+│   │   └── MemoryManager.hpp         # ✅ Keep
+│   │
+│   ├── hardware/                      # ✅ MOVED - Better organization
+│   │   ├── gpio/
+│   │   │   ├── GPIOController.cpp    # ✅ Keep
+│   │   │   ├── GPIOController.hpp    # ✅ Keep
+│   │   │   ├── BCM2712GPIO.cpp       # ✅ Keep
+│   │   │   └── BCM2712GPIO.hpp       # ✅ Keep
+│   │   ├── uart/
+│   │   │   ├── PL011UART.cpp         # ✅ Keep
+│   │   │   ├── PL011UART.hpp         # ✅ Keep
+│   │   │   └── UARTConsole.cpp       # ✅ Keep
+│   │   ├── interfaces/
+│   │   │   ├── I2CController.cpp     # ✅ Keep
+│   │   │   ├── I2CController.hpp     # ✅ Keep
+│   │   │   ├── SPIInterface.cpp      # ✅ Keep
+│   │   │   └── SPIInterface.hpp      # ✅ Keep
+│   │   ├── pwm/
+│   │   │   ├── PWMController.cpp     # ✅ Keep
+│   │   │   └── PWMController.hpp     # ✅ Keep
+│   │   ├── camera/
+│   │   │   ├── CameraInterface.cpp   # ✅ Keep
+│   │   │   ├── CameraInterface.hpp   # ✅ Keep
+│   │   │   └── CameraV4L2.cpp        # ✨ ADD - V4L2 implementation
+│   │   ├── audio/
+│   │   │   ├── AudioInterface.cpp    # ✅ Keep
+│   │   │   ├── AudioInterface.hpp    # ✅ Keep
+│   │   │   └── AudioALSA.cpp         # ✨ ADD - ALSA implementation
+│   │   └── pcie/
+│   │       ├── PCIeDriver.cpp        # ✅ Keep
+│   │       └── PCIeDriver.hpp        # ✅ Keep
+│   │
+│   ├── ui/
+│   │   ├── console/
+│   │   │   ├── ConsoleUI.cpp         # ✅ Keep
+│   │   │   └── ConsoleUI.hpp         # ✅ Keep
+│   │   ├── web/
+│   │   │   ├── WebServer.cpp         # ✅ Keep
+│   │   │   ├── WebServer.hpp         # ✅ Keep
+│   │   │   ├── WebSocketHandler.cpp  # ✨ ADD - Real-time updates
+│   │   │   └── WebSocketHandler.hpp  # ✨ ADD
+│   │   └── dashboard/
+│   │       ├── DashboardRenderer.cpp # ✨ ADD - HTML generation
+│   │       └── DashboardRenderer.hpp # ✨ ADD
+│   │
+│   ├── cloud/
+│   │   ├── CloudUploader.cpp         # ✅ Keep
+│   │   ├── CloudUploader.hpp         # ✅ Keep
+│   │   ├── providers/
+│   │   │   ├── NextcloudClient.cpp   # ✅ Keep
+│   │   │   ├── NextcloudClient.hpp   # ✅ Keep
+│   │   │   ├── OneDriveClient.cpp    # ✨ ADD - Microsoft OneDrive
+│   │   │   ├── OneDriveClient.hpp    # ✨ ADD
+│   │   │   ├── S3Client.cpp          # ✨ ADD - AWS S3
+│   │   │   └── S3Client.hpp          # ✨ ADD
+│   │   └── SyncManager.cpp           # ✨ ADD - Sync orchestration
+│   │
+│   ├── recording/
+│   │   ├── encoders/
+│   │   │   ├── H264Encoder.cpp       # ✨ ADD - Hardware H.264
+│   │   │   ├── H264Encoder.hpp       # ✨ ADD
+│   │   │   ├── AACEncoder.cpp        # ✨ ADD - Audio encoding
+│   │   │   └── AACEncoder.hpp        # ✨ ADD
+│   │   ├── VideoRecorder.cpp         # ✅ Keep
+│   │   ├── VideoRecorder.hpp         # ✅ Keep
+│   │   ├── AudioRecorder.cpp         # ✅ Keep
+│   │   ├── AudioRecorder.hpp         # ✅ Keep
+│   │   └── RecordingManager.cpp      # ✨ ADD - Orchestrates video/audio
+│   │
+│   ├── network/
+│   │   ├── UARTConsole.cpp           # ✅ Keep
+│   │   ├── UARTConsole.hpp           # ✅ Keep
+│   │   ├── NetworkManager.cpp        # ✅ Keep
+│   │   ├── NetworkManager.hpp        # ✅ Keep
+│   │   ├── TCPClient.cpp             # ✨ ADD - Cloud upload transport
+│   │   └── TCPClient.hpp             # ✨ ADD
+│   │
+│   ├── utils/
+│   │   ├── Logger.cpp                # ✨ ADD - Unified logging
+│   │   ├── Logger.hpp                # ✨ ADD
+│   │   ├── ConfigParser.cpp          # ✨ ADD - Config file parsing
+│   │   ├── ConfigParser.hpp          # ✨ ADD
+│   │   ├── TimeUtils.cpp             # ✨ ADD - Time utilities
+│   │   └── TimeUtils.hpp             # ✨ ADD
+│   │
+│   └── main.cpp                      # ✅ Keep - Entry point
+│
+├── include/
+│   ├── config/
+│   │   ├── Config.hpp                # ✅ Keep
+│   │   ├── Constants.hpp             # ✅ Keep
+│   │   └── BuildConfig.hpp           # ✨ ADD - Version info
+│   └── public/                        # ✨ ADD - Public API headers
+│       ├── RecordingAPI.hpp
+│       ├── StorageAPI.hpp
+│       └── CloudAPI.hpp
+│
+├── tests/
+│   ├── unit/
+│   │   ├── test_storage.cpp          # ✅ Keep
+│   │   ├── test_memory.cpp           # ✅ Keep
+│   │   ├── test_upload.cpp           # ✅ Keep
+│   │   └── test_hardware_mock.cpp    # ✨ ADD - Hardware mocking
+│   ├── integration/
+│   │   ├── test_full_system.cpp      # ✅ Keep
+│   │   ├── test_uart.cpp             # ✅ Keep
+│   │   └── test_recording_pipeline.cpp # ✨ ADD - End-to-end recording
+│   └── performance/
+│       ├── benchmark.cpp             # ✅ Keep
+│       └── stress_test.cpp           # ✅ Keep
+│
+├── scripts/
+│   ├── setup/
+│   │   ├── setup.sh                  # ✅ Keep
+│   │   ├── install_deps.sh           # ✨ ADD - Dependency installation
+│   │   └── configure_gpio.sh         # ✨ ADD - GPIO configuration
+│   ├── build/
+│   │   ├── build.sh                  # ✅ Keep
+│   │   └── cross_compile.sh          # ✨ ADD - ARM cross-compilation
+│   ├── deploy/
+│   │   ├── deploy.sh                 # ✅ Keep
+│   │   ├── install_service.sh        # ✨ ADD - Systemd service install
+│   │   └── backup_config.sh          # ✨ ADD - Config backup
+│   ├── monitoring/
+│   │   ├── monitor.sh                # ✅ Keep
+│   │   └── health_check.sh           # ✨ ADD - System health check
+│   ├── debug/
+│   │   ├── uart_setup.sh             # ✅ Keep
+│   │   ├── gpio_debug.sh             # ✨ ADD - GPIO debugging
+│   │   └── memory_profiler.sh        # ✨ ADD - Memory profiling
+│   └── docker/
+│       ├── docker_build.sh           # ✨ ADD - Docker build helper
+│       └── docker_run.sh             # ✨ ADD - Docker run helper
+│
+├── config/
+│   ├── boot/
+│   │   ├── config.txt                # ✅ Keep
+│   │   ├── cmdline.txt               # ✅ Keep
+│   │   └── config.override.txt       # ✨ ADD - User overrides
+│   ├── app/
+│   │   ├── recording-station.conf    # ✨ ADD - Main config
+│   │   ├── logging.conf              # ✨ ADD - Logging config
+│   │   └── .env.example              # ✅ Keep
+│   └── docker/
+│       └── docker-compose.yml        # ✅ Keep
+│
+├── web/
+│   ├── static/
+│   │   ├── css/
+│   │   │   ├── style.css             # ✅ Keep
+│   │   │   └── dashboard.css         # ✨ ADD - Dashboard styles
+│   │   ├── js/
+│   │   │   ├── script.js             # ✅ Keep
+│   │   │   ├── dashboard.js          # ✨ ADD - Dashboard logic
+│   │   │   └── websocket.js          # ✨ ADD - WebSocket client
+│   │   └── images/
+│   │       ├── logo.png              # ✨ ADD - Project logo
+│   │       └── icons/                # ✨ ADD - Icon set
+│   ├── templates/
+│   │   ├── index.html                # ✅ Keep
+│   │   ├── dashboard.html            # ✅ Keep
+│   │   ├── recordings.html           # ✨ ADD - Recording list
+│   │   └── settings.html             # ✨ ADD - Settings page
+│   └── api/
+│       └── swagger.yaml              # ✨ ADD - API documentation
+│
+├── hardware/
+│   ├── schematics/
+│   │   ├── main-board.svg            # ✅ Keep
+│   │   ├── power-supply.svg          # ✅ Keep
+│   │   ├── uart-interface.svg        # ✅ Keep
+│   │   ├── gpio-expansion.svg        # ✨ ADD - GPIO expansion board
+│   │   └── enclosure.dxf             # ✨ ADD - 3D printable enclosure
+│   ├── pinouts/
+│   │   ├── gpio-pinout.md            # ✅ Keep
+│   │   ├── uart-pinout.md            # ✅ Keep
+│   │   ├── camera-pinout.md          # ✅ Keep
+│   │   ├── i2c-devices.md            # ✨ ADD - I2C device addresses
+│   │   └── spi-devices.md            # ✨ ADD - SPI device mapping
+│   ├── components/
+│   │   ├── hdmi-capture.md           # ✅ Keep
+│   │   ├── audio-input.md            # ✅ Keep
+│   │   ├── storage-expansion.md      # ✅ Keep
+│   │   └── bill-of-materials.csv     # ✨ ADD - Complete BOM
+│   └── assembly/
+│       ├── assembly-guide.md         # ✅ Keep
+│       ├── troubleshooting.md        # ✅ Keep
+│       └── calibration.md            # ✨ ADD - Hardware calibration
+│
+├── cmake/
+│   ├── modules/
+│   │   ├── FindHardware.cmake        # ✨ ADD - Hardware detection
+│   │   ├── FindFFmpeg.cmake          # ✨ ADD - FFmpeg detection
+│   │   ├── FindOpenSSL.cmake         # ✨ ADD - OpenSSL detection
+│   │   └── FindWebSocket.cmake       # ✨ ADD - WebSocket detection
+│   ├── toolchains/
+│   │   ├── aarch64-linux-gnu.cmake   # ✨ ADD - ARM64 toolchain
+│   │   └── arm-linux-gnueabihf.cmake # ✨ ADD - ARMHF toolchain
+│   └── options.cmake                 # ✨ ADD - Build options
+│
+├── dependencies/
+│   ├── LICENSE                       # ✨ ADD - Dependencies license
+│   └── README.md                     # ✨ ADD - Dependency info
+│
+├── CMakeLists.txt                    # ✅ Keep - Updated
+├── Makefile                          # ✅ Keep - Updated
+├── README.md                         # ✅ Keep - Enhanced
+├── LICENSE                           # ✅ Keep
+├── .gitignore                        # ✅ Keep - Enhanced
+├── .gitattributes                    # ✨ ADD - Git attributes
+├── .clang-format                     # ✨ ADD - Code formatting rules
+├── .clang-tidy                       # ✨ ADD - Static analysis rules
+├── .pre-commit-config.yaml           # ✨ ADD - Pre-commit hooks
+├── CONTRIBUTING.md                   # ✅ Keep
+├── CHANGELOG.md                      # ✅ Keep
+├── SECURITY.md                       # ✅ Keep
+├── CODE_OF_CONDUCT.md                # ✨ ADD - Code of conduct
+└── SUPPORT.md                        # ✨ ADD - Support information

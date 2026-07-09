@@ -1,0 +1,90 @@
+Integration Test Summary
+File	Purpose	Key Test Cases
+test_full_system.cpp	Full system integration	System init, recording pipeline, storage, memory, cloud, network, UART, dashboard, performance, error recovery
+test_recording_pipeline.cpp	Recording pipeline tests	Video encoding, audio encoding, synchronized recording, H.264 encoder, AAC encoder, hardware acceleration, performance metrics
+test_uart.cpp	UART communication tests	Initialization, baud rates, data transmission/reception, flow control, statistics, console, break, bare-metal, loopback
+Key Features
+
+    Full System Tests:
+
+        System initialization with all components
+
+        Complete recording pipeline with video/audio
+
+        Storage management and file operations
+
+        Memory management with allocation/pools
+
+        Cloud integration with upload/sync
+
+        Network management and connectivity
+
+        UART communication
+
+        Dashboard rendering and export
+
+        Performance benchmarking
+
+        Error recovery testing
+
+        End-to-end recording sessions
+
+        Stress testing
+
+    Recording Pipeline Tests:
+
+        Video encoding with H.264
+
+        Audio encoding with AAC
+
+        Synchronized recording
+
+        H.264 encoder detailed testing
+
+        AAC encoder detailed testing
+
+        Hardware acceleration detection
+
+        Performance metrics and measurement
+
+    UART Tests:
+
+        Device initialization
+
+        Baud rate configuration
+
+        Data transmission and reception
+
+        Flow control (RTS/CTS)
+
+        Statistics tracking
+
+        UART console functionality
+
+        Send break signal
+
+        Device listing
+
+        Bare-metal mode
+
+        Hardware loopback testing
+
+Running Tests
+bash
+
+# Build and run all integration tests
+cd build
+make test-integration
+
+# Run specific test suite
+./tests/integration/test_full_system
+./tests/integration/test_recording_pipeline
+./tests/integration/test_uart
+
+# Run with verbose output
+./tests/integration/test_full_system --gtest_verbose=1
+
+# Run specific test case
+./tests/integration/test_recording_pipeline --gtest_filter=RecordingPipelineTest.VideoEncoding
+
+

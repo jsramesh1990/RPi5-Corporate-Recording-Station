@@ -1,0 +1,28 @@
+CSS Files Summary
+File	Purpose	Key Features
+style.css	Main application styles	Layout, sidebar, header, cards, forms, buttons, responsive
+dashboard.css	Dashboard-specific styles	Metrics, charts, recording controls, file list, GPIO, console
+Key Features
+
+    Dark Theme: Professional dark theme with gradients and subtle animations
+
+    Responsive Design: Mobile-first approach with breakpoints at 1024px, 768px, 480px
+
+    Component Library: Cards, badges, alerts, tables, forms, buttons
+
+    Status Indicators: Color-coded status badges and indicators with animations
+
+    Progress Bars: Animated progress bars with color coding
+
+    Animations: Fade-in, slide-in, pulse animations
+
+    UART Console: Terminal-style console with color coding
+
+    GPIO Display: Visual GPIO pin status display
+
+Usage
+
+The CSS files are designed to work with the HTML templates and JavaScript in the web interface. The style.css file provides the base styling, while dashboard.css adds dashboard-specific styles.
+
+Both files use CSS custom properties (variables) for easy theme customization. The dark theme is optimized for long-term viewing and low eye strain.
+
