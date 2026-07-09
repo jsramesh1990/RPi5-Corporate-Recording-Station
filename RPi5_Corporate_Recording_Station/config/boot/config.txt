@@ -1,0 +1,120 @@
+# Raspberry Pi 5 Boot Configuration
+# RPi5 Corporate Recording Station
+
+# ============================================
+# SYSTEM CONFIGURATION
+# ============================================
+
+# Enable UART for console
+enable_uart=1
+
+# GPU memory allocation (MB)
+gpu_mem=128
+
+# Force HDMI output
+hdmi_force_hotplug=1
+
+# Display settings
+hdmi_ignore_edid=0xa5000080
+hdmi_group=2
+hdmi_mode=82  # 1080p 60Hz
+
+# ============================================
+# UART CONFIGURATION
+# ============================================
+
+# Primary UART on GPIO 14 & 15 (ttyAMA0)
+dtparam=uart0=on
+dtparam=uart0_console
+
+# If using dedicated 3-pin connector (ttyAMA10)
+# Comment the above two lines and uncomment below:
+# dtoverlay=disable-bt
+
+# ============================================
+# STORAGE CONFIGURATION
+# ============================================
+
+# Enable PCIe for NVMe SSD
+dtoverlay=pcie-32bit-dma
+
+# USB storage quirks (if needed)
+# quirks=0x1234:0x5678:0x1
+
+# ============================================
+# PERFORMANCE TUNING
+# ============================================
+
+# CPU frequency scaling
+arm_freq=2400
+over_voltage=0
+
+# Force turbo mode (disables frequency scaling)
+force_turbo=0
+
+# Thermal management
+temp_soft_limit=80
+temp_limit=85
+
+# ============================================
+# AUDIO CONFIGURATION
+# ============================================
+
+# Enable audio
+dtparam=audio=on
+
+# Audio output (0=auto, 1=HDMI, 2=3.5mm)
+audio_pwm_mode=0
+
+# ============================================
+# MEMORY CONFIGURATION
+# ============================================
+
+# Kernel memory allocation
+kernel=u-boot.bin
+kernel_address=0x08000000
+kernel_size=0x08000000
+
+# CMA allocation for video
+cma-512
+
+# ============================================
+# NETWORK CONFIGURATION
+# ============================================
+
+# Disable WiFi (if using Ethernet only)
+# dtoverlay=disable-wifi
+
+# Disable Bluetooth (to free UART)
+dtoverlay=disable-bt
+
+# ============================================
+# BOOT BEHAVIOR
+# ============================================
+
+# Boot delay (seconds)
+boot_delay=2
+
+# Disable splash screen
+disable_splash=1
+
+# Console output
+console=serial0,115200
+console=tty1
+
+# ============================================
+# OVERCLOCKING (USE WITH CAUTION)
+# ============================================
+
+# Example overclock settings
+# over_voltage=2
+# arm_freq=2600
+# core_freq=500
+
+# ============================================
+# CUSTOM OVERRIDES
+# ============================================
+
+# Include user overrides if present
+[include]
+config.override.txt

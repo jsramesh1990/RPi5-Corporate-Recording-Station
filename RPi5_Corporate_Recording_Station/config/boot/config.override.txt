@@ -1,0 +1,58 @@
+# User Override Configuration
+# Copy this to config.override.txt and modify as needed
+# This file is included by config.txt
+
+# ============================================
+# NETWORK CONFIGURATION
+# ============================================
+
+# WiFi configuration (if not using Ethernet)
+# SSID and password for automatic connection
+# wlan_ssid=YourNetworkName
+# wlan_psk=YourPassword
+
+# Static IP (optional)
+# ip_address=192.168.1.100/24
+# routers=192.168.1.1
+# domain_name_servers=8.8.8.8
+
+# ============================================
+# DISPLAY CONFIGURATION
+# ============================================
+
+# HDMI resolution and refresh rate
+# hdmi_group=2
+# hdmi_mode=82  # 1080p 60Hz
+
+# Custom display rotation
+# display_rotate=0  # 0, 1, 2, 3
+
+# ============================================
+# AUDIO CONFIGURATION
+# ============================================
+
+# Audio output device
+# audio_pwm_mode=0  # 0=auto, 1=HDMI, 2=3.5mm
+
+# ============================================
+# GPIO CONFIGURATION
+# ============================================
+
+# Custom GPIO pin functions
+# dtoverlay=gpio-poweroff,gpiopin=17
+
+# ============================================
+# OVERCLOCKING
+# ============================================
+
+# Overclocking settings (use with caution!)
+# arm_freq=2600
+# core_freq=600
+# over_voltage=2
+
+# ============================================
+# BLUETOOTH
+# ============================================
+
+# Enable/disable Bluetooth
+# dtoverlay=disable-bt
