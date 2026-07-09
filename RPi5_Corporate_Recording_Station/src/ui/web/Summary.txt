@@ -1,0 +1,90 @@
+Web Server Summary
+File	Purpose	Key Features
+WebServer.hpp	Web server header	Types, structures, callbacks, public API
+WebServer.cpp	Web server implementation	HTTP routing, WebSocket, static files, middleware
+WebSocketHandler.hpp	WebSocket handler header	Types, structures, callbacks, public API
+WebSocketHandler.cpp	WebSocket handler implementation	Connection management, messaging, broadcasting
+Key Features
+
+    WebServer:
+
+        HTTP routing (GET, POST, PUT, DELETE, PATCH, OPTIONS)
+
+        Middleware support
+
+        Static file serving
+
+        JSON responses
+
+        CORS support
+
+        Authentication
+
+        Server statistics
+
+    WebSocketHandler:
+
+        Connection management
+
+        Message broadcasting
+
+        Client filtering
+
+        Message queuing
+
+        Ping/Pong keepalive
+
+        Authentication
+
+Usage Example
+cpp
+
+// Create web server
+WebServer server;
+WebServer::Config config;
+config.port = 8080;
+config.static_dir = "/var/www/recording-station";
+server.initialize(config);
+
+// Register routes
+server.get("/api/status", [](const WebServer::Request& req) {
+    std::string json = "{\"status\": \"online\", \"version\": \"2.0.0\"}";
+    return WebServer::jsonResponse(json);
+});
+
+server.post("/api/recording/start", [](const WebServer::Request& req) {
+    std::string filename = WebServer::parseJSON(req, "filename", "recording.mp4");
+    // Start recording logic...
+    std::string json = "{\"success\": true, \"filename\": \"" + filename + "\"}";
+    return WebServer::jsonResponse(json);
+});
+
+server.get("/api/storage", [](const WebServer::Request& req) {
+    // Get storage info...
+    std::string json = "{\"total\": 128000000000, \"used\": 76800000000}";
+    return WebServer::jsonResponse(json);
+});
+
+// WebSocket
+server.websocket("/ws", [](int client_id, const WebServer::WebSocketMessage& msg) {
+    // Handle WebSocket message
+    std::cout << "WebSocket message from " << client_id << ": " << msg.data << std::endl;
+});
+
+server.setOnWebSocketConnect([](int client_id) {
+    std::cout << "WebSocket client " << client_id << " connected" << std::endl;
+});
+
+// Start server
+server.start();
+
+// ... application runs ...
+
+// Broadcast to all WebSocket clients
+server.broadcastWebSocket("{\"event\": \"recording_started\", \"filename\": \"meeting.mp4\"}");
+
+// Stop server
+server.stop();
+server.shutdown();
+
+

@@ -1,0 +1,96 @@
+GPIO Hardware Summary
+File	Purpose	Key Features
+GPIOController.hpp	GPIO controller header	Types, structures, callbacks, public API
+GPIOController.cpp	Main implementation	Register access, digital I/O, PWM, interrupts, I2C, SPI
+BCM2712GPIO.hpp	BCM2712 extensions	Event handling, pin mapping, register access
+BCM2712GPIO.cpp	Extension implementation	GPIO-to-physical mapping, pin names, event handling
+Key Features
+
+    Digital I/O:
+
+        Pin configuration (input/output)
+
+        Read/write operations
+
+        Toggle and group operations
+
+        Pull-up/pull-down control
+
+    PWM (Pulse Width Modulation):
+
+        Frequency and duty cycle control
+
+        Hardware/software PWM
+
+    Interrupts:
+
+        Edge detection (rising/falling/both)
+
+        Level detection
+
+        Callback-based handling
+
+    I2C Interface:
+
+        Bus initialization
+
+        Read/write operations
+
+        Device scanning
+
+    SPI Interface:
+
+        Bus initialization
+
+        Transfer operations
+
+        Chip select control
+
+    Performance:
+
+        Register-level access
+
+        Thread safety with mutexes
+
+        Optimized for ARM Cortex-A76
+
+Usage Example
+cpp
+
+// Get GPIO controller instance
+auto& gpio = GPIOController::getInstance();
+
+// Initialize
+gpio.initialize();
+
+// Configure a pin as output
+GPIOController::PinConfig config;
+config.pin_number = 17;
+config.direction = GPIOController::PinDirection::OUTPUT;
+config.pull = GPIOController::PullMode::NONE;
+config.name = "LED";
+gpio.configurePin(config);
+
+// Write to pin
+gpio.writePin(17, true);
+
+// Configure a pin as input with interrupt
+config.pin_number = 22;
+config.direction = GPIOController::PinDirection::INPUT;
+config.pull = GPIOController::PullMode::PULL_UP;
+config.interrupt_enabled = true;
+config.interrupt_mode = GPIOController::InterruptMode::EDGE_FALLING;
+gpio.configurePin(config);
+
+// Set interrupt callback
+gpio.enableInterrupt(22, [](int pin, bool value) {
+    std::cout << "Button pressed on pin " << pin << std::endl;
+});
+
+// Use I2C
+gpio.i2cInit(1, 100000);
+std::vector<uint8_t> data = {0x00, 0x01};
+gpio.i2cWrite(1, 0x18, data);
+
+// Cleanup
+gpio.shutdown();

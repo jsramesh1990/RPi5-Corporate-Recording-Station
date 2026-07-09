@@ -1,0 +1,96 @@
+Utils Summary
+File	Purpose	Key Features
+Logger.hpp/cpp	Logging system	Multiple levels, file/console output, rotation, JSON format, component logging
+ConfigParser.hpp/cpp	Configuration parser	INI format, env substitution, sections, comments, type conversion
+TimeUtils.hpp/cpp	Time utilities	Formatting, parsing, duration, timezone, performance timing
+Key Features
+
+    Logger:
+
+        7 log levels (TRACE, DEBUG, INFO, SUCCESS, WARNING, ERROR, CRITICAL)
+
+        File and console output
+
+        Log rotation (size-based)
+
+        JSON and Syslog formats
+
+        Component-specific logging
+
+        Color-coded console output
+
+        Thread-safe
+
+    ConfigParser:
+
+        INI file format
+
+        Environment variable substitution ($VAR$)
+
+        Section-based organization
+
+        Type conversion (int, float, bool, list, map)
+
+        Comments support
+
+        Include support
+
+    TimeUtils:
+
+        Multiple format options (ISO8601, RFC3339, etc.)
+
+        Duration calculation and formatting
+
+        Parsing from strings
+
+        Timezone handling
+
+        Performance timer with RAII support
+
+Usage Examples
+cpp
+
+// Logger
+auto& logger = Logger::getInstance();
+Logger::Config config;
+config.level = Logger::Level::DEBUG;
+config.log_file = "/var/log/app.log";
+config.component = "main";
+logger.initialize(config);
+
+logger.info("Application started");
+logger.warning("High memory usage");
+logger.error("Failed to open file");
+
+auto comp = logger.getComponent("network");
+comp.debug("Connection established");
+
+// ConfigParser
+ConfigParser parser;
+parser.loadFile("/etc/app/config.conf");
+
+std::string host = parser.getString("network", "host", "localhost");
+int port = parser.getInt("network", "port", 8080);
+bool ssl = parser.getBool("security", "ssl_enabled", true);
+auto servers = parser.getList("cluster", "servers");
+
+// TimeUtils
+auto now = TimeUtils::now();
+std::string iso = TimeUtils::format(now, TimeUtils::Format::ISO8601);
+
+TimeUtils::Timer timer;
+timer.start();
+// ... do work ...
+timer.stop();
+auto elapsed = timer.elapsed();
+std::cout << "Elapsed: " << TimeUtils::formatDurationHuman(elapsed) << std::endl;
+
+// Scoped timer
+{
+    TimeUtils::ScopedTimer st("operation", [](const std::string& name, double ms) {
+        std::cout << name << " took " << ms << "ms" << std::endl;
+    });
+    // ... do work ...
+}
+
+

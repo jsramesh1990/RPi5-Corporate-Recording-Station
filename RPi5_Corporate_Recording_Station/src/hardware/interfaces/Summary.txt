@@ -1,0 +1,79 @@
+I2C/SPI Hardware Summary
+File	Purpose	Key Features
+I2CController.hpp	I2C controller header	Types, structures, callbacks, public API
+I2CController.cpp	I2C implementation	Bus management, device detection, read/write, bulk operations
+SPIInterface.hpp	SPI interface header	Types, structures, callbacks, public API
+SPIInterface.cpp	SPI implementation	Bus management, transfer operations, chip select control
+Key Features
+
+I2C Controller:
+
+    Multiple bus support
+
+    Device detection and scanning
+
+    Register read/write operations
+
+    Bulk transactions
+
+    Broadcast capabilities
+
+    Device identification database
+
+    Transaction statistics
+
+SPI Interface:
+
+    Multiple bus and chip select support
+
+    Full-duplex transfer
+
+    Configurable speed, mode, bit order
+
+    Scatter-gather transfers
+
+    Chip select control
+
+    Transfer statistics
+
+Usage Examples
+
+I2C Example:
+cpp
+
+auto& i2c = I2CController::getInstance();
+
+// Open bus
+i2c.openBus(1, I2CController::Speed::FAST);
+
+// Scan for devices
+auto devices = i2c.scanBus(1);
+for (uint8_t addr : devices) {
+    std::cout << "Device at 0x" << std::hex << addr << std::endl;
+}
+
+// Read from device
+auto data = i2c.read(1, 0x18, 2);
+
+// Write to register
+i2c.writeRegister(1, 0x18, 0x01, 0x02);
+
+SPI Example:
+cpp
+
+auto& spi = SPIInterface::getInstance();
+
+// Open bus
+SPIInterface::SPIConfig config;
+config.bus = 0;
+config.chip_select = 0;
+config.speed_hz = 1000000;
+config.mode = SPIInterface::Mode::MODE_0;
+spi.openBus(config);
+
+// Transfer data
+std::vector<uint8_t> tx = {0x01, 0x02, 0x03};
+auto rx = spi.transfer(0, tx);
+
+// Read from device
+auto data = spi.read(0, 10);

@@ -1,0 +1,85 @@
+Recording Summary
+File	Purpose	Key Features
+VideoRecorder.hpp	Video recorder header	Types, structures, callbacks, public API
+VideoRecorder.cpp	Video recorder implementation	FFmpeg integration, encoding, hardware acceleration
+AudioRecorder.hpp	Audio recorder header	Types, structures, callbacks, public API
+AudioRecorder.cpp	Audio recorder implementation	FFmpeg integration, encoding, audio processing
+RecordingManager.hpp	Recording manager header	Types, structures, callbacks, public API
+RecordingManager.cpp	Recording manager implementation	Synchronized recording, file combining
+Key Features
+
+    VideoRecorder:
+
+        Multiple codec support (H.264, H.265, MJPEG, VP8, VP9, AV1)
+
+        Hardware acceleration
+
+        Frame queuing and encoding
+
+        Configurable quality presets
+
+    AudioRecorder:
+
+        Multiple codec support (AAC, MP3, Opus, FLAC, WAV, PCM)
+
+        Variable sample rates and channels
+
+        Audio queuing and encoding
+
+        Low-latency processing
+
+    RecordingManager:
+
+        Synchronized video/audio recording
+
+        File combining
+
+        Progress tracking
+
+        Auto-combine feature
+
+Usage Example
+cpp
+
+// Create recording manager
+RecordingManager manager;
+
+// Configure video
+VideoRecorder::VideoConfig video_config;
+video_config.width = 1920;
+video_config.height = 1080;
+video_config.framerate = 30;
+video_config.bitrate = 4000000;
+video_config.codec = VideoRecorder::Codec::H264;
+
+// Configure audio
+AudioRecorder::AudioConfig audio_config;
+audio_config.sample_rate = 48000;
+audio_config.channels = 2;
+audio_config.bitrate = 128000;
+audio_config.codec = AudioRecorder::Codec::AAC;
+
+// Initialize
+manager.initialize(video_config, audio_config);
+manager.setOutputDirectory("/var/lib/recording-station/recordings");
+manager.setAutoCombine(true);
+
+// Set callbacks
+manager.setOnStateChange([](RecordingManager::RecorderState state) {
+    std::cout << "State: " << (int)state << std::endl;
+});
+manager.setOnProgress([](float progress) {
+    std::cout << "Progress: " << progress << "%" << std::endl;
+});
+manager.setOnComplete([](const RecordingManager::RecordingInfo& info) {
+    std::cout << "Recording complete: " << info.combined_file << std::endl;
+});
+
+// Start recording
+manager.startRecording("meeting_20260708");
+
+// ... record for a while ...
+
+// Stop recording
+manager.stopRecording();
+manager.shutdown();

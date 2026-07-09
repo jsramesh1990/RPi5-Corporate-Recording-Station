@@ -1,0 +1,85 @@
+Audio Hardware Summary
+File	Purpose	Key Features
+AudioInterface.hpp	Audio interface header	Types, structures, callbacks, public API
+AudioInterface.cpp	Main implementation	ALSA, PulseAudio, capture, playback, processing
+AudioALSA.cpp	ALSA helper functions	Additional ALSA-specific utilities
+Key Features
+
+    Audio Capture:
+
+        Real-time audio recording
+
+        Configurable sample rate, channels, format
+
+        Non-blocking and blocking modes
+
+    Audio Playback:
+
+        Queued playback
+
+        Volume control
+
+        Format conversion
+
+    Audio Processing:
+
+        Format conversion (int16 ↔ float)
+
+        Channel mixing
+
+        Resampling
+
+        Gain control
+
+    Device Management:
+
+        ALSA device discovery
+
+        I2S HAT support
+
+        USB audio support
+
+    Performance Optimization:
+
+        Thread priority settings
+
+        CPU affinity for ARM Cortex-A76
+
+        Buffer tuning for low latency
+
+Usage Example
+cpp
+
+// Initialize audio interface
+AudioInterface audio;
+AudioInterface::AudioConfig config;
+config.device = "hw:0,0";
+config.sample_rate = 48000;
+config.channels = 2;
+audio.initialize(config);
+
+// Set callback for audio data
+audio.set_on_audio_data([](const std::vector<int16_t>& data) {
+    // Process audio data
+    std::cout << "Received " << data.size() << " samples" << std::endl;
+});
+
+// Start recording
+audio.start_capture();
+
+// ... recording ...
+
+// Stop recording
+audio.stop_capture();
+
+// Generate test tone
+auto tone = audio.generate_tone(440, 1000, 0.3f);
+
+// Play tone
+audio.start_playback();
+audio.write_audio(tone);
+std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+audio.stop_playback();
+
+// Cleanup
+audio.shutdown();

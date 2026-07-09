@@ -1,0 +1,70 @@
+Network Hardware Summary
+File	Purpose	Key Features
+NetworkManager.hpp	Network manager header	Types, structures, callbacks, public API
+NetworkManager.cpp	Network implementation	Interface management, IP config, WiFi, statistics
+TCPClient.hpp	TCP client header	Types, structures, callbacks, public API
+TCPClient.cpp	TCP implementation	Connection management, data transmission, async operations
+Key Features
+
+    NetworkManager:
+
+        Interface discovery and management
+
+        DHCP and static IP configuration
+
+        WiFi scanning and connection
+
+        Connection quality monitoring
+
+        Network statistics
+
+    TCPClient:
+
+        Connection management with auto-reconnect
+
+        Asynchronous receive with callbacks
+
+        Message framing (length-prefixed)
+
+        SSL/TLS support (placeholder)
+
+        Statistics tracking
+
+Usage Examples
+cpp
+
+// Network Manager
+auto& nm = NetworkManager::getInstance();
+nm.initialize();
+
+// Get interfaces
+auto interfaces = nm.getInterfaces();
+for (const auto& iface : interfaces) {
+    std::cout << iface.name << ": " << iface.ip_address << std::endl;
+}
+
+// Connect WiFi
+NetworkManager::WiFiConfig wifi;
+wifi.ssid = "MyNetwork";
+wifi.password = "password123";
+nm.connectWiFi(wifi);
+
+// Check connectivity
+if (nm.checkInternetConnectivity()) {
+    std::cout << "Internet connected" << std::endl;
+}
+
+// TCP Client
+TCPClient client;
+TCPClient::TCPConfig config;
+config.host = "192.168.1.100";
+config.port = 8080;
+
+client.setOnData([](const std::vector<uint8_t>& data) {
+    std::cout << "Received: " << std::string(data.begin(), data.end()) << std::endl;
+});
+
+client.connect(config);
+client.sendData("Hello Server!");
+client.startAsyncReceive();
+

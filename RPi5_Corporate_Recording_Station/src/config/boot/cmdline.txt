@@ -1,0 +1,138 @@
+# ============================================================
+# Raspberry Pi 5 Kernel Command Line
+# RPi5 Corporate Recording Station
+# ============================================================
+
+# ============================================================
+# CONSOLE PARAMETERS
+# ============================================================
+
+# Serial console on UART0 at 115200 baud
+console=serial0,115200
+
+# Virtual console (tty1)
+console=tty1
+
+# ============================================================
+# ROOT FILESYSTEM
+# ============================================================
+
+# Root partition (UUID will be auto-detected)
+root=PARTUUID=4f3a7b5a-02
+rootfstype=ext4
+
+# Filesystem check and repair
+fsck.repair=yes
+
+# ============================================================
+# BOOT PARAMETERS
+# ============================================================
+
+# Boot with rootwait (wait for root device)
+rootwait
+
+# Quiet boot (reduces kernel messages)
+quiet
+
+# Splash screen (if enabled in config.txt)
+splash
+
+# ============================================================
+# MEMORY PARAMETERS
+# ============================================================
+
+# CMA allocation (512MB)
+cma=512M
+
+# ============================================================
+# PERFORMANCE PARAMETERS
+# ============================================================
+
+# CPU governor (performance, powersave, ondemand, conservative)
+# cpufreq.default_governor=performance
+
+# Disable CPU frequency scaling
+# cpufreq.scaling_min_freq=2400000
+# cpufreq.scaling_max_freq=2400000
+
+# ============================================================
+# DEBUG PARAMETERS
+# ============================================================
+
+# Kernel log level (0-8)
+# loglevel=8
+
+# Early printk for kernel debugging
+# earlyprintk
+
+# Enable kernel debug
+# debug
+
+# Disable kernel console messages
+# consoleblank=0
+
+# ============================================================
+# SECURITY PARAMETERS
+# ============================================================
+
+# Kernel security mitigations
+# mitigations=auto
+
+# Disable kernel address space layout randomization
+# kaslr=off
+
+# Disable SELinux
+# selinux=0
+
+# ============================================================
+# NETWORK PARAMETERS
+# ============================================================
+
+# Disable IPv6
+# ipv6.disable=1
+
+# Set network device name order
+# net.ifnames=0
+
+# ============================================================
+# STORAGE PARAMETERS
+# ============================================================
+
+# NVMe SSD parameters
+# nvme.core.default_ps_max_latency_us=0
+
+# ============================================================
+# AUDIO PARAMETERS
+# ============================================================
+
+# ALSA audio parameters
+# snd-usb-audio.index=0
+
+# ============================================================
+# GPIO PARAMETERS
+# ============================================================
+
+# GPIO power-off on system shutdown
+# gpio-poweroff,gpiopin=17
+
+# ============================================================
+# SYSTEMD PARAMETERS
+# ============================================================
+
+# Systemd debug
+# systemd.log_level=debug
+# systemd.log_target=console
+
+# ============================================================
+# RECORDING STATION SPECIFIC
+# ============================================================
+
+# Enable recording station features
+recording_station.enable=1
+
+# Log level for early boot
+recording_station.log_level=info
+
+# ============================================================
+# END OF COMMAND LINE
+# ============================================================

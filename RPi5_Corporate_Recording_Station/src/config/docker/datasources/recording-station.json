@@ -1,0 +1,30 @@
+{
+  "dashboard": {
+    "title": "Recording Station Dashboard",
+    "tags": ["recording-station", "raspberry-pi"],
+    "timezone": "utc",
+    "schemaVersion": 16,
+    "version": 1,
+    "panels": [
+      {
+        "title": "System Status",
+        "type": "stat",
+        "datasource": "Prometheus",
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "color": {
+              "mode": "thresholds"
+            }
+          }
+        },
+        "targets": [
+          {
+            "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+            "legendFormat": "CPU Usage"
+          }
+        ]
+      }
+    ]
+  }
+}

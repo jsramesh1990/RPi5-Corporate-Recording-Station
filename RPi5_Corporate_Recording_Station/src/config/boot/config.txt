@@ -1,0 +1,195 @@
+# ============================================================
+# Raspberry Pi 5 Boot Configuration
+# RPi5 Corporate Recording Station
+# ============================================================
+
+# ============================================================
+# SYSTEM CONFIGURATION
+# ============================================================
+
+# Enable UART for serial console
+enable_uart=1
+
+# GPU memory allocation (MB)
+gpu_mem=128
+
+# Force HDMI output (even if no display connected)
+hdmi_force_hotplug=1
+
+# Display settings for 1080p 60Hz
+hdmi_ignore_edid=0xa5000080
+hdmi_group=2
+hdmi_mode=82
+
+# Disable splash screen for faster boot
+disable_splash=1
+
+# Boot delay (seconds)
+boot_delay=2
+
+# ============================================================
+# UART CONSOLE CONFIGURATION
+# ============================================================
+
+# Enable UART0 on GPIO 14 & 15 (ttyAMA0)
+dtparam=uart0=on
+dtparam=uart0_console
+
+# Alternative: Use dedicated 3-pin UART connector (ttyAMA10)
+# Comment the above two lines and uncomment below:
+# dtoverlay=disable-bt
+# dtoverlay=uart0
+
+# ============================================================
+# STORAGE CONFIGURATION
+# ============================================================
+
+# Enable PCIe for NVMe SSD
+dtoverlay=pcie-32bit-dma
+
+# USB storage quirks (if needed)
+# quirks=0x1234:0x5678:0x1
+
+# ============================================================
+# PERFORMANCE TUNING
+# ============================================================
+
+# CPU frequency (default: 2400 MHz)
+arm_freq=2400
+
+# Core frequency
+core_freq=500
+
+# Voltage (0 = default, higher values for overclocking)
+over_voltage=0
+
+# Force turbo mode (disables frequency scaling)
+force_turbo=0
+
+# Thermal management
+temp_soft_limit=80
+temp_limit=85
+
+# Power management
+avoid_warnings=1
+avoid_safe_mode=1
+
+# ============================================================
+# AUDIO CONFIGURATION
+# ============================================================
+
+# Enable audio
+dtparam=audio=on
+
+# Audio output (0=auto, 1=HDMI, 2=3.5mm)
+audio_pwm_mode=0
+
+# ============================================================
+# MEMORY CONFIGURATION
+# ============================================================
+
+# Kernel memory allocation
+kernel=u-boot.bin
+kernel_address=0x08000000
+kernel_size=0x08000000
+
+# CMA allocation for video (512MB)
+cma-512
+
+# ============================================================
+# NETWORK CONFIGURATION
+# ============================================================
+
+# Disable WiFi (if using Ethernet only)
+# dtoverlay=disable-wifi
+
+# Disable Bluetooth (to free UART)
+dtoverlay=disable-bt
+
+# ============================================================
+# GPIO CONFIGURATION
+# ============================================================
+
+# Custom GPIO pin functions
+# dtoverlay=gpio-poweroff,gpiopin=17
+
+# ============================================================
+# DISPLAY CONFIGURATION
+# ============================================================
+
+# Display rotation (0, 1, 2, 3)
+display_rotate=0
+
+# HDMI overscan (for older displays)
+# overscan_left=16
+# overscan_right=16
+# overscan_top=16
+# overscan_bottom=16
+
+# ============================================================
+# CAMERA CONFIGURATION
+# ============================================================
+
+# Enable camera support
+dtoverlay=vc4-kms-v3d
+
+# Camera module specific overlays
+# Raspberry Pi Camera Module 3 (IMX708)
+dtoverlay=imx708
+
+# Raspberry Pi Camera Module 2 (IMX219)
+# dtoverlay=imx219
+
+# Raspberry Pi Camera Module 1 (OV5647)
+# dtoverlay=ov5647
+
+# ============================================================
+# OVERCLOCKING (USE WITH CAUTION)
+# ============================================================
+
+# Example overclock settings
+# over_voltage=2
+# arm_freq=2600
+# core_freq=550
+# gpu_freq=600
+
+# Overclocking for max performance
+# over_voltage=6
+# arm_freq=2800
+# core_freq=600
+# gpu_freq=650
+
+# ============================================================
+# DEBUG CONFIGURATION
+# ============================================================
+
+# Kernel debug
+# kernel=kernel-debug.img
+
+# Enable early printk for kernel debugging
+# earlyprintk
+
+# Disable kernel warnings
+# nohz=off
+
+# ============================================================
+# RECOVERY CONFIGURATION
+# ============================================================
+
+# Boot from USB if SD card fails
+# bootcode_delay=0
+
+# Enable boot recovery mode
+# recovery_mode=1
+
+# ============================================================
+# CUSTOM OVERRIDES
+# ============================================================
+
+# Include user overrides if present
+[include]
+config.override.txt
+
+# ============================================================
+# END OF CONFIGURATION
+# ============================================================

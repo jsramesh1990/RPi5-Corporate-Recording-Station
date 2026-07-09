@@ -1,0 +1,85 @@
+PWM Hardware Summary
+File	Purpose	Key Features
+PWMController.hpp	PWM controller header	Types, structures, callbacks, public API
+PWMController.cpp	PWM implementation	Hardware/software PWM, servo control, tone generation, LED dimming
+Key Features
+
+    PWM Control:
+
+        Hardware and software PWM
+
+        Configurable frequency and duty cycle
+
+        Multiple channels (0-7)
+
+        Polarity control
+
+    Servo Control:
+
+        Pulse width configuration
+
+        Angle mapping (0-180°)
+
+        Sweep functionality
+
+        Center positioning
+
+    Tone Generation:
+
+        Frequency generation
+
+        Note playback (A-G with sharps/flats)
+
+        Melody playback
+
+        Volume control
+
+    LED Dimming:
+
+        Brightness control (0-100%)
+
+        Fade effects
+
+        Breathing effect
+
+    Hardware Support:
+
+        Raspberry Pi 5 PWM channels
+
+        GPIO pin mapping
+
+        Register-level control
+
+        Software PWM fallback
+
+Usage Examples
+cpp
+
+auto& pwm = PWMController::getInstance();
+
+// Initialize
+pwm.initialize();
+
+// Configure PWM on channel 0 (GPIO12)
+PWMController::PWMConfig config;
+config.channel = PWMController::Channel::CHANNEL_0;
+config.pin = 12;
+config.frequency = 1000;
+config.duty_cycle = 50;
+pwm.configure(config);
+pwm.enable(PWMController::Channel::CHANNEL_0);
+
+// Configure servo
+pwm.configureServo(PWMController::Channel::CHANNEL_1);
+pwm.setServoAngle(PWMController::Channel::CHANNEL_1, 90);
+
+// Play a tone
+pwm.playTone(PWMController::Channel::CHANNEL_2, 440, 1000, 50);
+
+// LED breathing effect
+pwm.breatheLED(PWMController::Channel::CHANNEL_3, 2000, 0, 100);
+
+// Cleanup
+pwm.shutdown();
+
+

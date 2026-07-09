@@ -1,0 +1,118 @@
+Console UI Summary
+File	Purpose	Key Features
+ConsoleUI.hpp	Console UI header	Types, structures, callbacks, public API
+ConsoleUI.cpp	Console UI implementation	Output, logging, tables, menus, progress bars, status display
+Key Features
+
+    Output:
+
+        Colored text (16 colors)
+
+        Text styles (bold, underline, italic, etc.)
+
+        Formatted output
+
+        Clear screen and line
+
+    Logging:
+
+        Multiple log levels (DEBUG, INFO, SUCCESS, WARNING, ERROR, CRITICAL)
+
+        Color-coded log messages
+
+        Timestamp formatting
+
+    Progress:
+
+        Progress bars with custom styles
+
+        Spinners for indeterminate progress
+
+        Indeterminate progress animation
+
+    Tables:
+
+        Key-value tables
+
+        Multi-column tables
+
+        Auto-width calculation
+
+    Menus:
+
+        Interactive menus with callbacks
+
+        Confirmation dialogs
+
+        Input prompts
+
+        Selection prompts
+
+    Status Display:
+
+        System status
+
+        Recording status
+
+        Storage status
+
+        Memory status
+
+    Screen Management:
+
+        Fullscreen mode
+
+        Auto-refresh
+
+        Cursor management
+
+Usage Example
+cpp
+
+// Initialize console UI
+ConsoleUI ui;
+ui.initialize("Recording Station");
+
+// Log messages
+ui.info("System started");
+ui.success("Recording started");
+ui.warning("Storage usage high");
+ui.error("Failed to write file");
+
+// Show status
+std::map<std::string, std::string> status;
+status["CPU"] = "45%";
+status["Memory"] = "1.2/4.0 GB";
+status["Storage"] = "76.8/128.0 GB";
+ui.displayStatus(status);
+
+// Display recording status
+ui.displayRecordingStatus(true, "recording_20260708.mp4", 3600, 1500000000);
+
+// Progress bar
+for (int i = 0; i <= 100; i += 10) {
+    ui.drawProgressBar(i / 100.0f, "Processing");
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+}
+
+// Interactive menu
+std::vector<ConsoleUI::MenuItem> menu = {
+    {"1", "Start Recording", "Begin recording", []() { /* ... */ }},
+    {"2", "Stop Recording", "Stop recording", []() { /* ... */ }},
+    {"3", "Upload to Cloud", "Upload files", []() { /* ... */ }},
+    {"q", "Quit", "Exit application", []() { /* ... */ }}
+};
+ui.showMenuInteractive(menu, "Main Menu");
+
+// Table
+std::vector<std::string> headers = {"File", "Size", "Date"};
+std::vector<std::vector<std::string>> rows = {
+    {"meeting.mp4", "2.4 GB", "2026-07-08"},
+    {"recording.wav", "45 MB", "2026-07-07"}
+};
+ui.drawSimpleTable(headers, rows);
+
+// Shutdown
+ui.shutdown();
+
+

@@ -1,0 +1,80 @@
+UART Hardware Summary
+File	Purpose	Key Features
+PL011UART.hpp	PL011 UART header	Types, structures, callbacks, public API
+PL011UART.cpp	PL011 implementation	Device I/O, async operations, bare-metal, statistics
+UARTConsole.hpp	UART console header	Command handling, prompt, colors
+UARTConsole.cpp	Console implementation	Interactive console, command processing
+Key Features
+
+    PL011 UART Driver:
+
+        Full PL011 register support
+
+        Configurable baud rate, parity, stop bits
+
+        Hardware and software flow control
+
+        Bare-metal mode support
+
+    Async Operations:
+
+        Asynchronous read with callbacks
+
+        Write queue for non-blocking output
+
+        Thread-safe operations
+
+    UART Console:
+
+        Interactive command-line interface
+
+        Command history and echo
+
+        Color support
+
+        Customizable prompt
+
+    Monitoring:
+
+        Full statistics tracking
+
+        Error detection and reporting
+
+        Throughput calculation
+
+        Status monitoring
+
+Usage Examples
+cpp
+
+// Initialize UART
+PL011UART uart;
+PL011UART::UARTConfig config;
+config.device = "/dev/ttyAMA0";
+config.baud_rate = 115200;
+uart.initialize(config);
+
+// Write data
+uart.writeData("Hello UART!\r\n");
+
+// Read data
+auto data = uart.readData(100);
+
+// Async read
+uart.startAsyncRead([](const std::vector<uint8_t>& data) {
+    std::cout << "Received: " << std::string(data.begin(), data.end());
+});
+
+// UART Console
+UARTConsole console;
+console.initialize("/dev/ttyAMA0", 115200);
+console.setPrompt("record> ");
+console.setCommandHandler([](const std::string& cmd) {
+    if (cmd == "status") return "System: Online";
+    if (cmd == "record") return "Recording started";
+    if (cmd == "stop") return "Recording stopped";
+    return "Unknown command";
+});
+console.enable();
+
+

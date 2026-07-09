@@ -1,0 +1,43 @@
+Boot Configuration Summary
+File	Purpose	Key Settings
+config.txt	Primary boot configuration	UART, GPU memory, HDMI, PCIe, performance, audio, camera
+cmdline.txt	Kernel command line	Console, root filesystem, memory, boot parameters
+config.override.txt	User overrides	WiFi, static IP, overclocking, custom GPIO, fan control
+Configuration Hierarchy
+
+    config.txt (primary boot settings)
+
+    config.override.txt (user overrides - included by config.txt)
+
+    cmdline.txt (kernel command line parameters)
+
+UART Console Options
+Option	Device	Pins	Notes
+GPIO UART	/dev/ttyAMA0	GPIO 14/15	Requires dtparam=uart0=on and dtparam=uart0_console
+Dedicated UART	/dev/ttyAMA10	3-pin connector	Default on Pi 5, requires dtoverlay=disable-bt
+Mini UART	/dev/ttyS0	GPIO 14/15	Alternative (lower performance)
+Deployment Commands
+bash
+
+# Copy boot configuration to SD card
+sudo cp config/boot/config.txt /boot/firmware/
+sudo cp config/boot/cmdline.txt /boot/firmware/
+sudo cp config/boot/config.override.txt /boot/firmware/
+
+# Verify configuration
+cat /boot/firmware/config.txt
+cat /boot/firmware/cmdline.txt
+
+# Reboot to apply changes
+sudo reboot
+
+# Check UART console (after reboot)
+screen /dev/ttyAMA0 115200
+
+Boot Performance Tuning
+Setting	Value	Effect
+boot_delay	2	Boot delay in seconds
+disable_splash	1	Disable splash screen
+quiet	in cmdline	Reduce kernel messages
+force_turbo	1	Always run at max frequency
+arm_freq	2400	CPU frequency in MHz

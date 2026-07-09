@@ -1,0 +1,78 @@
+Encoders Summary
+File	Purpose	Key Features
+H264Encoder.hpp	H.264 encoder header	Types, structures, callbacks, public API
+H264Encoder.cpp	H.264 encoder implementation	Hardware acceleration, presets, profiles, levels
+AACEncoder.hpp	AAC encoder header	Types, structures, callbacks, public API
+AACEncoder.cpp	AAC encoder implementation	Profiles, sample rates, bitrates
+Key Features
+
+    H264Encoder:
+
+        Hardware acceleration (VideoCore VII)
+
+        Multiple presets (ultrafast to placebo)
+
+        Profiles (baseline, main, high)
+
+        Levels (1.0 to 5.2)
+
+        Frame queuing
+
+        Statistics tracking
+
+    AACEncoder:
+
+        Multiple profiles (LC, HE-AAC, HE-AAC v2)
+
+        Configurable sample rates and bitrates
+
+        Frame queuing
+
+        Statistics tracking
+
+Usage Example
+cpp
+
+// H.264 Encoder
+H264Encoder h264;
+H264Encoder::Config h264_config;
+h264_config.width = 1920;
+h264_config.height = 1080;
+h264_config.framerate = 30;
+h264_config.bitrate = 4000000;
+h264_config.preset = H264Encoder::Preset::FAST;
+h264_config.profile = H264Encoder::Profile::HIGH;
+h264_config.hardware_acceleration = true;
+
+h264.initialize(h264_config);
+
+h264.setOnFrame([](const H264Encoder::EncodedFrame& frame) {
+    // Process encoded frame
+    std::cout << "Frame: " << frame.size_bytes << " bytes, "
+              << (frame.is_keyframe ? "I" : "P") << "-frame" << std::endl;
+});
+
+// Encode frames
+std::vector<uint8_t> yuv_frame(width * height * 3 / 2);
+h264.encodeFrame(yuv_frame, 0);
+
+h264.flush();
+h264.shutdown();
+
+// AAC Encoder
+AACEncoder aac;
+AACEncoder::Config aac_config;
+aac_config.sample_rate = 48000;
+aac_config.channels = 2;
+aac_config.bitrate = 128000;
+aac_config.profile = AACEncoder::Profile::AAC_LC;
+
+aac.initialize(aac_config);
+
+std::vector<int16_t> audio_samples(sample_rate * channels);
+aac.encodeAudio(audio_samples, 0);
+
+aac.flush();
+aac.shutdown();
+
+

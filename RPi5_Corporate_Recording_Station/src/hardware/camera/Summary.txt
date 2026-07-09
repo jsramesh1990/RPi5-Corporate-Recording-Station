@@ -1,0 +1,80 @@
+ Camera Hardware Summary
+File	Purpose	Key Features
+CameraInterface.hpp	Camera interface header	Types, structures, callbacks, public API
+CameraInterface.cpp	Main implementation	V4L2, CSI, USB, HDMI, capture, streaming
+CameraV4L2.cpp	V4L2 helper functions	Additional V4L2-specific utilities
+Key Features
+
+    Camera Capture:
+
+        Real-time video capture
+
+        Configurable resolution, framerate, format
+
+        Single frame and continuous capture
+
+    Camera Types:
+
+        CSI (Raspberry Pi Camera Module)
+
+        USB (UVC Webcams)
+
+        HDMI (Capture Cards)
+
+    Image Processing:
+
+        Format conversion
+
+        JPEG encoding
+
+        Frame saving
+
+    Control:
+
+        Exposure, gain, brightness, contrast
+
+        Auto exposure, white balance, focus
+
+        Rotation and flip
+
+    Performance Optimization:
+
+        Thread priority for ARM Cortex-A76
+
+        CPU affinity
+
+        Buffer management
+
+Usage Example
+cpp
+
+// Initialize camera
+CameraInterface camera;
+CameraInterface::CameraConfig config;
+config.device = "/dev/video0";
+config.width = 1920;
+config.height = 1080;
+config.framerate = 30;
+camera.initialize(config);
+
+// Set frame callback
+camera.set_on_frame([](const CameraInterface::FrameInfo& frame) {
+    // Process frame
+    std::cout << "Frame: " << frame.width << "x" << frame.height 
+              << ", " << frame.data.size() << " bytes" << std::endl;
+});
+
+// Start streaming
+camera.start_streaming();
+
+// ... streaming ...
+
+// Capture a single frame
+auto frame = camera.capture_frame();
+camera.save_frame(frame, "test.jpg");
+
+// Stop streaming
+camera.stop_streaming();
+
+// Cleanup
+camera.shutdown();

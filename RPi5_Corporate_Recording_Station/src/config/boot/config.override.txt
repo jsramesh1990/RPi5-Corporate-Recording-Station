@@ -1,0 +1,139 @@
+# ============================================================
+# User Override Configuration
+# RPi5 Corporate Recording Station
+# ============================================================
+# Copy this to config.override.txt and modify as needed
+# This file is included by config.txt
+
+# ============================================================
+# NETWORK CONFIGURATION
+# ============================================================
+
+# WiFi configuration
+# SSID and password for automatic connection
+# wlan_ssid=YourNetworkName
+# wlan_psk=YourPassword
+
+# WiFi country code
+# wlan_country=US
+
+# Static IP configuration (comment out for DHCP)
+# ip_address=192.168.1.100/24
+# routers=192.168.1.1
+# domain_name_servers=8.8.8.8 1.1.1.1
+
+# ============================================================
+# DISPLAY CONFIGURATION
+# ============================================================
+
+# HDMI resolution and refresh rate
+# hdmi_group=2
+# hdmi_mode=82  # 1080p 60Hz
+
+# Custom display rotation
+# display_rotate=0  # 0, 1, 2, 3
+
+# Display orientation
+# display_lcd_rotate=0
+
+# ============================================================
+# AUDIO CONFIGURATION
+# ============================================================
+
+# Audio output device
+# 0 = auto, 1 = HDMI, 2 = 3.5mm
+# audio_pwm_mode=0
+
+# ============================================================
+# GPIO CONFIGURATION
+# ============================================================
+
+# Custom GPIO pin functions
+# dtoverlay=gpio-poweroff,gpiopin=17,active_low=1
+# dtoverlay=gpio-shutdown,gpiopin=22,active_low=1
+
+# Custom I2C bus
+# dtparam=i2c_arm=on
+
+# Custom SPI bus
+# dtparam=spi=on
+
+# ============================================================
+# OVERCLOCKING
+# ============================================================
+
+# WARNING: Use with caution!
+# Overclocking can damage your Pi and void warranty
+
+# Overclocking settings
+# arm_freq=2600
+# core_freq=600
+# gpu_freq=600
+# over_voltage=2
+
+# Extreme overclocking (use at your own risk)
+# arm_freq=2800
+# core_freq=650
+# gpu_freq=650
+# over_voltage=6
+
+# ============================================================
+# BLUETOOTH
+# ============================================================
+
+# Enable/disable Bluetooth
+# dtoverlay=disable-bt
+
+# ============================================================
+# USB CONFIGURATION
+# ============================================================
+
+# USB quirks for specific devices
+# quirks=0x1234:0x5678:0x1
+
+# Disable USB power management
+# max_usb_current=1
+
+# ============================================================
+# COOLING AND FAN CONFIGURATION
+# ============================================================
+
+# Fan control with GPIO
+# dtoverlay=gpio-fan,gpiopin=18,temp=60000,hyst=5000
+
+# Active cooler (Raspberry Pi 5 official cooler)
+# dtoverlay=rp1-ct
+
+# ============================================================
+# POWER MANAGEMENT
+# ============================================================
+
+# Power LED configuration
+# dtoverlay=act-led,gpio=13
+
+# Power on/off button
+# dtoverlay=gpio-shutdown,gpio_pin=3,active_low=1,gpio_pull=up
+
+# ============================================================
+# RTC CONFIGURATION
+# ============================================================
+
+# I2C RTC modules
+# dtoverlay=i2c-rtc,ds3231
+
+# ============================================================
+# GPIO PINS FOR RECORDING STATION
+# ============================================================
+
+# Custom GPIO mapping for recording station
+# These are the default pins used by the software
+# gpio=17=op,dl,pu  # System LED
+# gpio=27=op,dl,pu  # Recording LED
+# gpio=22=ip,pu     # Start Button
+# gpio=23=ip,pu     # Stop Button
+# gpio=24=op,dl,pu  # Error LED
+# gpio=25=op,dl,pu  # Status LED
+
+# ============================================================
+# END OF USER OVERRIDES
+# ============================================================

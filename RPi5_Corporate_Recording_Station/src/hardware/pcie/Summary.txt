@@ -1,0 +1,103 @@
+PCIe Hardware Summary
+File	Purpose	Key Features
+PCIeDriver.hpp	PCIe driver header	Types, structures, callbacks, public API
+PCIeDriver.cpp	PCIe implementation	Device scanning, NVMe operations, performance testing, SMART monitoring
+Key Features
+
+    Device Management:
+
+        PCIe device scanning and detection
+
+        Device type identification (NVMe, SATA, USB, Network)
+
+        Vendor/device ID database
+
+    NVMe Operations:
+
+        Device initialization
+
+        Mount/Unmount
+
+        Format with filesystem
+
+        Partition creation
+
+        SMART data monitoring
+
+    Performance Testing:
+
+        Sequential read/write speed tests
+
+        Random read/write IOPS tests
+
+        Benchmark with multiple iterations
+
+        Latency measurement
+
+    Monitoring:
+
+        Temperature monitoring
+
+        Health percentage tracking
+
+        Power-on hours
+
+        Read/write statistics
+
+    Device Database:
+
+        Common PCIe device IDs
+
+        Vendor names
+
+        Device type classification
+
+Usage Example
+cpp
+
+auto& pcie = PCIeDriver::getInstance();
+
+// Initialize
+pcie.initialize();
+
+// Scan for devices
+auto devices = pcie.scanDevices();
+for (const auto& dev : devices) {
+    std::cout << "Device: " << dev.vendor_name << " " << dev.device_name << std::endl;
+}
+
+// Get NVMe devices
+auto nvme_devices = pcie.getNVMeDevices();
+for (const auto& nvme : nvme_devices) {
+    std::cout << "NVMe: " << nvme.model << " (" << nvme.serial_number << ")" << std::endl;
+    std::cout << "  Capacity: " << pcie.formatCapacity(nvme.total_capacity) << std::endl;
+    std::cout << "  Temperature: " << nvme.temperature_celsius << "°C" << std::endl;
+    std::cout << "  Health: " << (100 - nvme.percentage_used) << "%" << std::endl;
+}
+
+// Mount NVMe
+pcie.mountNVMe("/dev/nvme0n1", "/mnt/nvme", "ext4");
+
+// Run speed test
+auto speed = pcie.runSpeedTest("/dev/nvme0n1", 1024);
+std::cout << "Read: " << speed.read_speed_mb_s << " MB/s" << std::endl;
+std::cout << "Write: " << speed.write_speed_mb_s << " MB/s" << std::endl;
+
+// Run benchmark
+auto benchmark = pcie.benchmark("/dev/nvme0n1", 5);
+std::cout << "Sequential Read: " << benchmark.sequential_read_mb_s << " MB/s" << std::endl;
+
+// Get SMART data
+auto smart = pcie.getNVMeSMART("/dev/nvme0n1");
+std::cout << "SMART: " << smart << std::endl;
+
+// Diagnostics
+auto diag = pcie.runDiagnostics("/dev/nvme0n1");
+if (diag.passed) {
+    std::cout << "Device is healthy" << std::endl;
+}
+
+// Cleanup
+pcie.shutdown();
+
+

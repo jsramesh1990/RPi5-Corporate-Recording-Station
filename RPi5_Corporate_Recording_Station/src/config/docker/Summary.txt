@@ -1,0 +1,44 @@
+Docker Configuration Summary
+File	Purpose	Key Settings
+docker-compose.yml	Service orchestration	Recording station, PostgreSQL, Redis, Nextcloud, Prometheus, Grafana
+Dockerfile	Application container build	ARM64 base, dependencies, build, deployment
+nginx.conf	Web server configuration	Performance, SSL, security headers
+nextcloud.conf	Nextcloud server	HTTPS, PHP-FPM, static files
+prometheus.yml	Monitoring configuration	Scrape targets, intervals
+alerts.yml	Alert rules	CPU, memory, disk, temperature alerts
+grafana.ini	Visualization configuration	Server, database, security
+prometheus.yml (datasource)	Grafana datasource	Prometheus connection
+recording-station.json	Dashboard template	Monitoring panels
+Deployment Commands
+bash
+
+# Start all services
+cd config/docker
+docker-compose up -d
+
+# Check status
+docker-compose ps
+
+# View logs
+docker-compose logs -f recording-station
+
+# Stop all services
+docker-compose down
+
+# Update and restart
+docker-compose pull
+docker-compose up -d --build
+
+# Clean up
+docker-compose down -v
+
+Service URLs
+Service	URL	Credentials
+Recording Station	http://localhost:8080	admin/admin
+Nextcloud	https://nextcloud.local	admin/admin_password
+Grafana	http://localhost:3000	admin/admin
+Prometheus	http://localhost:9090	-
+Portainer	http://localhost:9000	-
+PostgreSQL	localhost:5432	recording/recording_password
+Redis	localhost:6379	-
+
